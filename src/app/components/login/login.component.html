@@ -1,0 +1,87 @@
+<div class="container-fluid d-flex justify-content-center align-items-center min-vh-100">
+    <div class="login-card">
+        <h3 class="text-center mb-4">{{ isSignUp ? 'Create Account' : 'Welcome Back' }}</h3>
+
+        <div class="form-wrapper">
+            <form [class.active]="!isSignUp" class="form-content" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <div class="mb-3 position-relative">
+                    <i class="bi bi-person icon"></i>
+                    <input type="text" class="form-control" formControlName="username"
+                        placeholder="Username or Email" />
+                    <div *ngIf="lf['username'].touched && lf['username'].invalid" class="text-danger small mt-1">
+                        <div *ngIf="lf['username'].errors?.['required']">Username is required.</div>
+                        <div *ngIf="lf['username'].errors?.['minlength']">At least 3 characters required.</div>
+                    </div>
+                </div>
+
+                <div class="mb-2 position-relative">
+                    <i class="bi bi-lock icon"></i>
+                    <input [type]="showPassword ? 'text' : 'password'" class="form-control" formControlName="password"
+                        placeholder="Password" />
+                    <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'" (click)="togglePassword()"
+                        class="toggle-eye"></i>
+                    <div *ngIf="lf['password'].touched && lf['password'].invalid" class="text-danger small mt-1">
+                        <div *ngIf="lf['password'].errors?.['required']">Password is required.</div>
+                        <div *ngIf="lf['password'].errors?.['minlength']">At least 6 characters required.</div>
+                    </div>
+                </div>
+
+                <a href="#" class="forgot-password">Forgot Password?</a>
+                <button type="submit" class="btn-login w-100">Login</button>
+            </form>
+
+            <form *ngIf="isSignUp" [class.active]="isSignUp" class="form-content" [formGroup]="signupForm" (ngSubmit)="onSubmitSignUp()">
+                <div class="mb-3 position-relative">
+                    <i class="bi bi-person icon"></i>
+                    <input type="text" class="form-control" formControlName="username"
+                        placeholder="Username or Email" />
+                    <div *ngIf="sf['username'].touched && sf['username'].invalid" class="text-danger small mt-1">
+                        <div *ngIf="sf['username'].errors?.['required']">Username is required.</div>
+                        <div *ngIf="sf['username'].errors?.['minlength']">At least 3 characters required.</div>
+                    </div>
+                </div>
+
+                <div class="mb-2 position-relative">
+                    <i class="bi bi-lock icon"></i>
+                    <input [type]="showPassword ? 'text' : 'password'" class="form-control" formControlName="password"
+                        placeholder="Password" />
+                    <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'" (click)="togglePassword()"
+                        class="toggle-eye"></i>
+                    <div *ngIf="sf['password'].touched && sf['password'].invalid" class="text-danger small mt-1">
+                        <div *ngIf="sf['password'].errors?.['required']">Password is required.</div>
+                        <div *ngIf="sf['password'].errors?.['minlength']">At least 6 characters required.</div>
+                    </div>
+                </div>
+
+                <div class="mb-2 position-relative">
+                    <i class="bi bi-lock-fill icon"></i>
+                    <input [type]="showPassword ? 'text' : 'password'" class="form-control"
+                        formControlName="confirmPassword" placeholder="Confirm Password" />
+                    <div *ngIf="sf['confirmPassword'].touched && sf['confirmPassword'].invalid"
+                        class="text-danger small mt-1">
+                        <div *ngIf="sf['confirmPassword'].errors?.['required']">Confirm Password is required.</div>
+                    </div>
+                </div>
+
+                <div *ngIf="signupForm.hasError('mismatch') && sf['confirmPassword'].touched" class="text-danger small">
+                    Passwords do not match.
+                </div>
+
+                <button type="submit" class="btn-login w-100">Sign Up</button>
+            </form>
+        </div>
+
+        <div class="other">
+            <h5>- OR Continue With -</h5>
+            <div class="icons">
+                <i class="bi bi-google"></i>
+                <i class="bi bi-apple"></i>
+                <i class="bi bi-facebook"></i>
+            </div>
+            <p>
+                {{ isSignUp ? 'Already have an account?' : 'Create an account' }}
+                <a (click)="toggleForm()">{{ isSignUp ? 'Login' : 'Sign Up' }}</a>
+            </p>
+        </div>
+    </div>
+</div>

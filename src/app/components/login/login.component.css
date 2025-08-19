@@ -1,0 +1,309 @@
+.container-fluid {
+    background: linear-gradient(135deg, #EB147D, #ff6fa9);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.login-card {
+    position: relative;
+    background: linear-gradient(145deg, #ffffff, #f9f9f9);
+    padding: 3rem;
+    border-radius: 20px;
+    width: 450px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08),
+        0 0 50px rgba(235, 20, 125, 0.3);
+    transition: all 0.3s ease;
+}
+
+.login-card h3 {
+    font-weight: 700;
+    font-size: 2rem;
+    color: #222;
+    letter-spacing: -0.5px;
+}
+
+.form-control {
+    padding-left: 55px;
+    height: 55px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    font-size: 1.05rem;
+    background-color: #fafafa;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #EB147D;
+    background-color: #fff;
+    box-shadow: 0 0 0 4px rgba(235, 20, 125, 0.15);
+}
+
+.icon {
+    position: absolute;
+    top: 50%;
+    left: 18px;
+    transform: translateY(-50%);
+    font-size: 1.4rem;
+    color: #b0b0b0;
+    transition: color 0.3s ease;
+}
+
+.form-control:focus~.icon {
+    color: #EB147D;
+}
+
+.toggle-eye {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    color: #b0b0b0;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.toggle-eye:hover {
+    color: #EB147D;
+}
+
+.forgot-password {
+    display: block;
+    text-align: right;
+    font-size: 0.95rem;
+    margin-top: 8px;
+    color: #EB147D;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.forgot-password:hover {
+    color: #c01063;
+}
+
+.btn-login {
+    background: linear-gradient(135deg, #EB147D, #d3126f);
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    margin-top: 25px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(235, 20, 125, 0.3);
+}
+
+.btn-login:hover {
+    background: linear-gradient(135deg, #d3126f, #b50f5d);
+    box-shadow: 0 10px 28px rgba(235, 20, 125, 0.4);
+}
+
+.other {
+    padding: 2rem;
+    border-radius: 15px;
+    max-width: 450px;
+    margin-top: 30px;
+    text-align: center;
+}
+
+.other h5 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #222;
+}
+
+.icons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.icons i {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f837572b;
+    color: white;
+    font-size: 1.3rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.icons i:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(248, 55, 88, 0.5);
+}
+
+.icons .bi-google {
+    color: #DB4437;
+    border: 1px solid #DB4437;
+}
+
+.icons .bi-google:hover {
+    background: #DB4437;
+    color: white;
+}
+
+.icons .bi-apple {
+    color: #000000;
+    border: 1px solid #000000;
+}
+
+.icons .bi-apple:hover {
+    background: #000000;
+    color: white;
+}
+
+.icons .bi-facebook {
+    color: #1877F2;
+    border: 1px solid #1877F2;
+}
+
+.icons .bi-facebook:hover {
+    background: #1877F2;
+    color: white;
+}
+
+.other p {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 0;
+}
+
+.other p a {
+    color: #EB147D;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.other p a:hover {
+    text-decoration: underline;
+}
+
+.form-wrapper {
+    position: relative;
+    overflow: hidden;
+    min-height: 200px;
+}
+
+.form-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.form-content.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+    position: relative;
+}
+
+@media (max-width: 768px) {
+    .login-card {
+        width: 100%;
+        max-width: 400px;
+        padding: 2rem;
+        border-radius: 15px;
+    }
+
+    .login-card h3 {
+        font-size: 1.7rem;
+    }
+
+    .form-control {
+        height: 50px;
+        font-size: 1rem;
+        padding-left: 50px;
+    }
+
+    .icon {
+        font-size: 1.2rem;
+        left: 15px;
+    }
+
+    .toggle-eye {
+        font-size: 1rem;
+        right: 12px;
+    }
+
+    .btn-login {
+        font-size: 1rem;
+        padding: 14px;
+    }
+
+    .other {
+        padding: 1.5rem;
+        margin-top: 20px;
+    }
+
+    .icons i {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container-fluid {
+        padding: 10px;
+    }
+
+    .login-card {
+        padding: 1.5rem;
+        width: 100%;
+        max-width: 100%;
+        border-radius: 12px;
+    }
+
+    .login-card h3 {
+        font-size: 1.5rem;
+    }
+
+    .form-control {
+        height: 48px;
+        font-size: 0.95rem;
+    }
+
+    .btn-login {
+        font-size: 0.95rem;
+        padding: 12px;
+    }
+
+    .icons {
+        gap: 10px;
+    }
+
+    .icons i {
+        width: 38px;
+        height: 38px;
+        font-size: 1rem;
+    }
+
+    .other h5 {
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+    }
+
+    .other p {
+        font-size: 0.85rem;
+    }
+}
