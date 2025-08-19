@@ -349,14 +349,14 @@
 
 /* ---------------- Responsive ---------------- */
 @media (max-width: 992px) {
-    .featured {
-        flex-direction: column;
+    .featured-item .content{
+        padding: 10px 15px;
     }
 
     .deal {
-        flex-direction: column;
         gap: 15px;
         text-align: center;
+        padding: 10px 15px;
     }
 }
 
