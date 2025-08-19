@@ -1,0 +1,134 @@
+footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 60px 80px;
+    background-color: #EB147DF2;
+    /* semi-transparent premium pink */
+    color: white;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    border-top: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+footer .left,
+footer .right {
+    display: flex;
+    flex-direction: column;
+}
+
+footer .left img {
+    width: 140px;
+    filter: brightness(0) invert(1);
+    /* makes logo fully white */
+    margin-bottom: 20px;
+}
+
+footer .left p {
+    margin: 10px 0 25px 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+footer .left .list h4 {
+    margin-bottom: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: white;
+}
+
+footer .left .list ul {
+    list-style: none;
+    padding: 0;
+}
+
+footer .left .list ul li {
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.9);
+    transition: 0.3s;
+}
+
+footer .left .list ul li:hover {
+    color: #ffd6eb;
+}
+
+footer .right .details h5 {
+    margin: 0 0 8px 0;
+    font-size: 22px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+footer .right .details a {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+footer .right .details a:hover {
+    color: #ffd6eb;
+    text-decoration: underline;
+}
+
+footer .right .social {
+    display: flex;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+footer .right .social i {
+    font-size: 22px;
+    cursor: pointer;
+    transition: transform 0.3s, color 0.3s;
+}
+
+footer .right .social i:hover {
+    color: #ffd6eb;
+    transform: scale(1.2);
+}
+
+footer .right .updates h6 {
+    font-size: 14px;
+    margin-bottom: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: white;
+}
+
+footer .right .updates input {
+    padding: 10px 16px;
+    border-radius: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    background: transparent;
+    color: white;
+    width: 220px;
+    margin-bottom: 10px;
+    transition: border 0.3s;
+}
+
+footer .right .updates input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+footer .right .updates input:focus {
+    outline: none;
+    border-color: #fff;
+}
+
+footer .right .updates button {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 25px;
+    background-color: white;
+    color: #EB147DF2;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+footer .right .updates button:hover {
+    background-color: #ffd6eb;
+    color: #EB147DF2;
+}
