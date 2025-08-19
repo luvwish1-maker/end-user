@@ -1,7 +1,68 @@
 <app-header></app-header>
 
 <div class="container-fluid">
+    <div class="filters">
+        <input type="text" placeholder="Search any products">
+        <button>Sort <i class="bi bi-arrow-down-up"></i></button>
+        <button>Filter <i class="bi bi-funnel"></i></button>
+    </div>
 
+    <div class="featured">
+        <div class="featured-item left" [style.backgroundImage]="'url(/home1.png)'">
+            <div class="content">
+                <h3>50-40% OFF</h3>
+                <p>Kits that care. Subscriptions that save</p>
+                <button>Shop Now <i class="bi bi-arrow-right"></i></button>
+            </div>
+        </div>
+        <div class="featured-item right" [style.backgroundImage]="'url(/home2.png)'">
+            <div class="content">
+                <h3>50-40% OFF</h3>
+                <p>Kits that care. Subscriptions that save</p>
+                <button>Shop Now <i class="bi bi-arrow-right"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="categories">
+        <h4>Select Categories</h4>
+        <div class="category-list">
+            <div class="category" *ngFor="let category of categories">
+                <img [src]="category.img" [alt]="category.label">
+                <p>{{ category.label }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="deal">
+        <div class="para">
+            <h4>Deal of the day</h4>
+            <p>22h 55m 20s remaining</p>
+        </div>
+        <button>View All <i class="bi bi-arrow-right"></i></button>
+    </div>
+
+    <div class="products">
+        <div class="product-card" *ngFor="let product of products">
+            <a>
+                <img [src]="product.img" [alt]="product.name">
+            </a>
+            <h5>{{ product.name }}</h5>
+
+            <div class="price-stock">
+                <div class="price-column">
+                    <span class="price">₹{{ product.price }}</span>
+                    <span class="original-price">₹{{ product.originalPrice }}</span>
+                </div>
+                <span class="stock">{{ product.stock }} in stock</span>
+            </div>
+
+            <div class="product-buttons">
+                <button class="buy">Buy Now</button>
+                <button class="cart">Add to Cart</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <app-footer></app-footer>

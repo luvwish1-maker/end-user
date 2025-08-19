@@ -5,17 +5,19 @@ header.header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 20px;
+    padding: 0 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 header .logo img {
     height: 50px;
+    max-width: 100%;
 }
 
 header .icons i {
     cursor: pointer;
     color: #333;
+    transition: color 0.3s;
 }
 
 header .icons i:hover {
@@ -24,5 +26,37 @@ header .icons i:hover {
 
 .left-placeholder {
     width: 60px;
-    /* same width as icons section for perfect centering of logo */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    header.header {
+        padding: 0 10px;
+    }
+
+    .left-placeholder {
+        width: 40px;
+    }
+
+    header .logo img {
+        height: 40px;
+    }
+
+    header .icons i {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .left-placeholder {
+        width: 30px;
+    }
+
+    header .icons {
+        gap: 10px;
+    }
+
+    header .logo img {
+        height: 35px;
+    }
 }
