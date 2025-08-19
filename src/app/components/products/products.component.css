@@ -1,12 +1,13 @@
-/* Container */
+/* ---------------- Container ---------------- */
 .container-fluid {
-    padding: 30px 0px;
+    padding: 30px 20px;
     color: #333;
     max-width: 1300px;
     margin: 0 auto;
+    font-family: 'Poppins', sans-serif;
 }
 
-/* Filters */
+/* ---------------- Filters ---------------- */
 .filters {
     display: flex;
     gap: 15px;
@@ -16,21 +17,22 @@
 
 .filters input[type="text"] {
     flex: 1;
-    padding: 12px 18px;
+    padding: 14px 20px;
     border: 1px solid #ddd;
     border-radius: 50px;
     font-size: 16px;
-    transition: 0.3s;
+    transition: all 0.3s ease;
+    background: #fafafa;
 }
 
 .filters input[type="text"]:focus {
     border-color: #EB147D;
+    box-shadow: 0 0 12px rgba(235, 20, 125, 0.2);
     outline: none;
-    box-shadow: 0 0 8px rgba(235, 20, 125, 0.2);
 }
 
 .filters button {
-    padding: 12px 25px;
+    padding: 12px 28px;
     border: 1px solid #EB147D;
     background: white;
     color: #EB147D;
@@ -40,7 +42,7 @@
     align-items: center;
     gap: 8px;
     font-weight: 500;
-    transition: 0.3s;
+    transition: all 0.3s ease;
 }
 
 .filters button:hover {
@@ -48,57 +50,55 @@
     color: white;
 }
 
-/* Featured Section */
+/* ---------------- Featured Section ---------------- */
 .featured {
     display: flex;
-    gap: 20px;
+    gap: 25px;
     margin-bottom: 50px;
     flex-wrap: wrap;
 }
 
 .featured-item {
     flex: 1;
-    min-width: 280px;
-    height: 320px;
-    border-radius: 15px;
+    min-width: 300px;
+    height: 360px;
+    border-radius: 20px;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     background-size: cover;
     background-position: center;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    transition: transform 0.3s;
-}
-
-.featured-item:hover {
-    transform: scale(1.03);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
 .featured-item .content {
-    background: rgba(255, 255, 255, 0.85);
-    padding: 25px 20px;
-    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 25px 30px;
+    border-radius: 20px;
     text-align: center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
 }
 
 .featured-item h3 {
-    font-size: 28px;
+    font-size: 30px;
     color: #EB147D;
     margin-bottom: 10px;
+    font-weight: 700;
 }
 
 .featured-item p {
     font-size: 16px;
-    margin-bottom: 15px;
-    color: #333;
+    margin-bottom: 18px;
+    color: #555;
 }
 
 .featured-item button {
-    padding: 12px 30px;
+    padding: 12px 35px;
     border-radius: 50px;
     border: none;
-    background-color: #EB147D;
+    background: linear-gradient(90deg, #EB147D, #FF4081);
     color: white;
     font-weight: 600;
     cursor: pointer;
@@ -109,77 +109,73 @@
 }
 
 .featured-item button:hover {
-    background-color: #fff;
+    background: white;
     color: #EB147D;
     border: 1px solid #EB147D;
 }
 
-/* Categories */
-.categories {
-    margin-bottom: 50px;
-}
-
+/* ---------------- Categories ---------------- */
 .categories h4 {
     margin-bottom: 20px;
-    font-size: 22px;
-    font-weight: 600;
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
 }
 
 .category-list {
     display: flex;
-    gap: 15px;
+    gap: 20px;
     flex-wrap: wrap;
 }
 
 .category {
     text-align: center;
     cursor: pointer;
-    flex: 0 0 auto;
-    transition: transform 0.3s;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .category:hover {
-    transform: translateY(-5px);
+    transform: translateY(-6px);
 }
 
 .category img {
-    width: 70px;
-    height: 70px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid #EB147D;
     padding: 5px;
-    transition: 0.3s;
+    transition: all 0.3s ease;
 }
 
 .category img:hover {
-    transform: scale(1.1);
+    transform: scale(1.15);
     border-color: #FF4081;
 }
 
 .category p {
-    margin-top: 8px;
+    margin-top: 10px;
     font-weight: 500;
     font-size: 14px;
 }
 
-/* Deal of the day */
+/* ---------------- Deal of the day ---------------- */
 .deal {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 30px;
-    border-radius: 15px;
-    max-width: 600px;
+    padding: 25px 30px;
+    border-radius: 20px;
+    max-width: 650px;
     margin-bottom: 50px;
-    background-color: #4392F9;
+    background: linear-gradient(135deg, #4392F9, #6FA8FF);
     color: white;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
 }
 
 .deal h4 {
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 22px;
+    font-weight: 700;
 }
 
 .deal p {
@@ -190,11 +186,11 @@
     border: 1px solid white;
     background: transparent;
     color: white;
-    padding: 10px 20px;
+    padding: 12px 28px;
     border-radius: 50px;
     cursor: pointer;
     font-weight: 500;
-    transition: 0.3s;
+    transition: all 0.3s ease;
 }
 
 .deal button:hover {
@@ -202,121 +198,71 @@
     color: #4392F9;
 }
 
-/* Products Grid */
+/* ---------------- Products Grid ---------------- */
 .products {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 25px;
 }
 
 .product-card {
-    border-radius: 15px;
+    border-radius: 20px;
     overflow: hidden;
     text-align: center;
-    padding: 15px;
     background: white;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-    transition: 0.3s;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100%;
+    padding: 20px;
 }
 
 .product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+    transform: translateY(-7px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
 .product-card img {
     width: 100%;
-    margin-bottom: 12px;
-    border-radius: 10px;
+    height: 200px;
+    margin-bottom: 15px;
+    border-radius: 15px;
     object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.product-card img:hover {
+    transform: scale(1.05);
 }
 
 .product-card h5 {
-    font-size: 16px;
-    font-weight: 500;
-    margin-bottom: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #333;
 }
 
 .product-info {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 12px;
-    gap: 10px;
     flex-wrap: wrap;
-}
-
-.product-info .price-stock {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.product-info .price-stock .price {
-    font-weight: 600;
-    color: #EB147D;
-    font-size: 16px;
-}
-
-.product-info .price-stock .original-price {
-    text-decoration: line-through;
-    color: #aaa;
-    font-weight: 400;
-    font-size: 14px;
-}
-
-.product-info .stock {
-    font-size: 14px;
-    color: #555;
-}
-
-/* Quantity Selector */
-.product-info .quantity {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.product-info .quantity button {
-    width: 28px;
-    height: 28px;
-    border: 1px solid #ddd;
-    background: white;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 16px;
-    font-weight: bold;
-    transition: 0.2s;
-}
-
-.product-info .quantity button:hover {
-    background-color: #f0f0f0;
-}
-
-.product-info .quantity input {
-    width: 50px;
-    text-align: center;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 4px;
-    font-size: 14px;
+    gap: 12px;
+    margin-bottom: 15px;
 }
 
 .price-stock {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin-bottom: 8px;
+    align-items: flex-start;
+    gap: 5px;
 }
 
 .price-stock .price {
-    font-weight: 600;
+    font-weight: 700;
     color: #EB147D;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .price-stock .original-price {
@@ -327,30 +273,28 @@
 }
 
 .stock {
-    margin-bottom: 10px;
     font-size: 14px;
     color: #555;
+    margin-bottom: 5px;
 }
 
 /* Quantity Selector */
 .quantity {
     display: flex;
-    justify-content: center;
     align-items: center;
     gap: 8px;
-    margin-bottom: 12px;
 }
 
 .quantity button {
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
     border: 1px solid #ddd;
     background: white;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 6px;
     font-size: 16px;
     font-weight: bold;
-    transition: 0.2s;
+    transition: all 0.2s ease;
 }
 
 .quantity button:hover {
@@ -358,44 +302,75 @@
 }
 
 .quantity input {
-    width: 50px;
+    width: 55px;
     text-align: center;
     border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 4px;
+    border-radius: 6px;
+    padding: 5px;
     font-size: 14px;
 }
 
+/* Product Buttons */
 .product-buttons {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .product-buttons button {
     flex: 1;
-    padding: 10px 0;
+    padding: 12px 0;
     border-radius: 50px;
     font-weight: 600;
-    transition: 0.3s;
+    font-size: 14px;
+    transition: all 0.3s ease;
 }
 
 .product-card .buy {
-    background-color: #00C853;
+    background: linear-gradient(90deg, #00C853, #00e864);
     color: white;
     border: none;
 }
 
 .product-card .buy:hover {
-    background-color: #00e864;
+    opacity: 0.9;
 }
 
 .product-card .cart {
-    background-color: #2196F3;
+    background: linear-gradient(90deg, #2196F3, #1E88E5);
     color: white;
     border: none;
 }
 
 .product-card .cart:hover {
-    background-color: #1e88e5;
+    opacity: 0.9;
+}
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 992px) {
+    .featured {
+        flex-direction: column;
+    }
+
+    .deal {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .filters {
+        flex-direction: column;
+    }
+
+    .filters button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .product-card img {
+        height: 180px;
+    }
 }
