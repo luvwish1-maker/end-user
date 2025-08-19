@@ -1,0 +1,28 @@
+header.header {
+    position: relative;
+    background-color: #fff;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header .logo img {
+    height: 50px;
+}
+
+header .icons i {
+    cursor: pointer;
+    color: #333;
+}
+
+header .icons i:hover {
+    color: #EB147D;
+}
+
+.left-placeholder {
+    width: 60px;
+    /* same width as icons section for perfect centering of logo */
+}
