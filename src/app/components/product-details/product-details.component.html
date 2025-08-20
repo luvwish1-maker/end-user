@@ -1,12 +1,21 @@
 <app-header></app-header>
 
 <div class="container-fluid">
-    <div id="productCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
+    <div id="productCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
         <div class="carousel-inner">
-            <div class="carousel-item" data-bs-interval="3000" *ngFor="let img of details.images; let i = index" [class.active]="i === 0">
+            <div class="carousel-item" data-bs-interval="3000" *ngFor="let img of details.images; let i = index"
+                [class.active]="i === 0">
                 <img [src]="img" class="d-block w-100 carousel-img" alt="Product Image {{ i + 1 }}" />
             </div>
         </div>
+
+        <div class="carousel-indicators">
+            <button *ngFor="let img of details.images; let i = index" type="button" data-bs-target="#productCarousel"
+                [attr.data-bs-slide-to]="i" [class.active]="i === 0" [attr.aria-current]="i === 0 ? 'true' : null"
+                [attr.aria-label]="'Slide ' + (i + 1)">
+            </button>
+        </div>
+
         <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
@@ -29,9 +38,9 @@
             </div>
         </div>
         <div class="right">
-            <h5>{{ details.price }}</h5>
+            <h5>Rs {{ details.price }}</h5>
             <h5>
-                <span class="original-price">{{ details.originalPrice }}</span>
+                <span class="original-price">Rs {{ details.originalPrice }}</span>
                 <span class="discount">{{ details.discount }}</span>
             </h5>
         </div>
