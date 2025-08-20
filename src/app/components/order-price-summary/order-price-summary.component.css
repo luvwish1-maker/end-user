@@ -32,21 +32,18 @@
     border: 1px solid #ddd;
 }
 
-/* Order Details */
 .order-details h5 {
     margin: 0 0 8px 0;
     font-size: 18px;
     font-weight: 600;
 }
 
-/* Rating stars */
 .rating i {
     color: #FFD700;
     margin-right: 2px;
     font-size: 16px;
 }
 
-/* Price and discount */
 .price-row {
     display: flex;
     align-items: center;
@@ -77,7 +74,6 @@
     font-weight: 600;
 }
 
-/* Quantity input */
 .quantity {
     margin-top: 12px;
     display: flex;
@@ -94,7 +90,6 @@
     font-weight: 500;
 }
 
-/* Summary Section */
 .summary {
     margin-top: 40px;
     padding: 20px;
@@ -118,7 +113,6 @@
     gap: 8px;
 }
 
-/* Coupon Button */
 .coupon-btn {
     background: none;
     border: none;
@@ -133,7 +127,6 @@
     text-decoration: underline;
 }
 
-/* Payment Details */
 .details {
     margin-top: 20px;
 }
@@ -153,7 +146,6 @@
     color: #666;
 }
 
-/* Total */
 .total {
     display: flex;
     justify-content: space-between;
@@ -167,7 +159,6 @@
     font-size: 18px;
 }
 
-/* Pay Button */
 .pay-btn {
     width: 100%;
     padding: 12px;
@@ -185,6 +176,68 @@
     background: #d1126e;
 }
 
-.divider {
-    margin: 20px 0;
+@media (max-width: 768px) {
+    .order-card {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .order-card img {
+        width: 100%;
+        height: auto;
+        max-height: 200px;
+    }
+
+    .summary {
+        margin-top: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container-fluid {
+        padding: 0 10px;
+        margin: 20px auto;
+    }
+
+    .order-card {
+        padding: 15px;
+    }
+
+    .order-details h5 {
+        font-size: 16px;
+    }
+
+    .price {
+        font-size: 14px;
+    }
+
+    .original-price {
+        font-size: 12px;
+    }
+
+    .discount {
+        font-size: 12px;
+    }
+
+    .quantity span {
+        font-size: 13px;
+    }
+
+    .coupon h3 {
+        font-size: 16px;
+    }
+
+    .coupon-btn {
+        font-size: 14px;
+    }
+
+    .total-amount {
+        font-size: 16px;
+    }
+
+    .pay-btn {
+        font-size: 14px;
+        padding: 10px;
+    }
 }
