@@ -1,0 +1,75 @@
+<app-header></app-header>
+
+<div class="container-fluid">
+    <div class="order-cards">
+        <div class="order-card" *ngFor="let order of orderList">
+            <img [src]="order.img" alt="{{ order.name }}">
+            <div class="order-details">
+                <h5>{{ order.name }}</h5>
+
+                <!-- Rating as stars -->
+                <div class="rating">
+                    <ng-container *ngFor="let star of [0,1,2,3,4]; let i = index">
+                        <i class="bi" [ngClass]="getStars(order.rating, i)"></i>
+                    </ng-container>
+                </div>
+
+                <!-- Price, original price, discount -->
+                <div class="price-row">
+                    <div class="price-col">
+                        <span class="price">₹{{ order.price }}</span>
+                        <span class="original-price">₹{{ order.originalPrice }}</span>
+                        <span class="discount">{{ order.discount }}</span>
+                    </div>
+                </div>
+
+                <!-- Quantity -->
+                <div class="quantity">
+                    <label>Qty:</label>
+                    <input type="number" [(ngModel)]="order.quantity" min="1">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="summary">
+        <div class="coupon">
+            <h3><i class="bi bi-ticket-perforated"></i> Apply Coupon</h3>
+            <button class="coupon-btn">Select</button>
+        </div>
+
+         <hr class="divider">
+
+        <div class="details">
+            <div class="heading">
+                <h4>Order Payment Details</h4>
+            </div>
+            <div class="amount">
+                <h6>Order Amounts</h6>
+                <h6>$ 7,000.00</h6>
+            </div>
+            <div class="convience">
+                <h6>Convenience</h6>
+                <button class="coupon-btn">Apply Coupon</button>
+            </div>
+            <div class="delivery">
+                <div class="heading">
+                    <h6>Delivery Fee</h6>
+                    <p>Shipping in India</p>
+                </div>
+                <h6>$ 60</h6>
+            </div>
+        </div>
+
+         <hr class="divider">
+
+        <div class="total">
+            <h6>Order Total</h6>
+            <h6 class="total-amount">$7,060.00</h6>
+        </div>
+
+        <button class="pay-btn">PROCEED TO PAY</button>
+    </div>
+</div>
+
+<app-footer></app-footer>
