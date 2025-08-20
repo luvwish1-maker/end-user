@@ -1,0 +1,64 @@
+<app-header></app-header>
+
+<div class="container-fluid">
+
+    <!-- Orders List -->
+    <div class="orders">
+        <div class="heading">
+            <h4>Order List</h4>
+        </div>
+
+        <div class="order-cards">
+            <div class="order-card" *ngFor="let order of orderList">
+                <img [src]="order.img" alt="{{ order.name }}">
+                <div class="order-details">
+                    <h5>{{ order.name }}</h5>
+
+                    <!-- Rating as stars -->
+                    <div class="rating">
+                        <ng-container *ngFor="let star of [0,1,2,3,4]; let i = index">
+                            <i class="bi" [ngClass]="getStars(order.rating, i)"></i>
+                        </ng-container>
+                    </div>
+
+                    <!-- Price, original price, discount -->
+                    <div class="price-row">
+                        <div class="price-col">
+                            <span class="price">₹{{ order.price }}</span>
+                            <span class="original-price">₹{{ order.originalPrice }}</span>
+                            <span class="discount">{{ order.discount }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Quantity -->
+                    <div class="quantity">
+                        <label>Qty:</label>
+                        <input type="number" [(ngModel)]="order.quantity" min="1">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Address -->
+    <div class="address-section">
+        <h4>Address</h4>
+        <h5><i class="bi bi-geo-alt"></i> Delivery Address</h5>
+
+        <div class="address-row">
+            <div class="address-card">
+                <p>{{ address.address }}</p>
+            </div>
+            <div class="address-button">
+                <button>Change</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Button -->
+    <div class="checkout-btn">
+        <button>Check Out</button>
+    </div>
+</div>
+
+<app-footer></app-footer>
