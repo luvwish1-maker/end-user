@@ -1,50 +1,60 @@
+/* Container */
 .container-fluid {
-    max-width: 900px;
+    max-width: 1000px;
     margin: 40px auto;
     padding: 0 20px;
     font-family: 'Poppins', sans-serif;
     color: #333;
 }
 
-/* Heading */
+/* Headings */
 .orders .heading h4,
-.address-card h4 {
+.address-section h4,
+.address-section h5 {
     margin-bottom: 20px;
+    font-weight: 600;
+    color: #222;
 }
 
 /* Order Cards */
 .order-cards {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 25px;
 }
 
 .order-card {
     display: flex;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 10px;
-    gap: 15px;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 20px;
+    gap: 20px;
     align-items: center;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .order-card img {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
 }
 
+/* Order Details */
 .order-details h5 {
-    margin: 0 0 5px 0;
-    font-size: 16px;
+    margin: 0 0 8px 0;
+    font-size: 18px;
+    font-weight: 600;
 }
 
 /* Rating stars */
 .rating i {
     color: #FFD700;
     margin-right: 2px;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 /* Price and discount */
@@ -52,87 +62,135 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-top: 5px;
+    margin-top: 8px;
 }
 
 .price-col {
     display: flex;
-    gap: 5px;
+    gap: 10px;
     align-items: center;
 }
 
 .price {
-    font-weight: 600;
+    font-weight: 700;
+    font-size: 16px;
+    color: #EB147D;
 }
 
 .original-price {
     text-decoration: line-through;
     color: #888;
+    font-size: 14px;
 }
 
 .discount {
-    color: #EB147D;
+    color: #FF3366;
     font-weight: 600;
 }
 
 /* Quantity input */
 .quantity {
-    margin-top: 10px;
+    margin-top: 12px;
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 10px;
+}
+
+.quantity label {
+    font-weight: 500;
 }
 
 .quantity input {
-    width: 50px;
-    padding: 2px 5px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    width: 60px;
+    padding: 5px 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.2s;
 }
 
-/* Address card */
+.quantity input:focus {
+    outline: none;
+    border-color: #EB147D;
+    box-shadow: 0 0 5px rgba(235, 20, 125, 0.3);
+}
+
 /* Address Section */
-.address-section h4,
-.address-section h5 {
-  margin-bottom: 10px;
+.address-section {
+    margin-top: 40px;
 }
 
-/* Card and button on same row */
 .address-row {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 15px;
+    flex-wrap: wrap;
 }
 
 .address-card {
-  flex: 1;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 15px;
+    flex: 1;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 .address-button button {
-  background-color: #EB147D;
-  border: none;
-  color: #fff;
-  padding: 10px 15px;
-  border-radius: 6px;
-  cursor: pointer;
+    background-color: #EB147D;
+    border: none;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
 }
 
-/* Checkout button */
+.address-button button:hover {
+    background-color: #d10f7c;
+}
+
+/* Checkout Button */
 .checkout-btn {
     text-align: center;
-    margin: 40px 0;
+    margin: 50px 0;
 }
 
 .checkout-btn button {
     background-color: #EB147D;
     border: none;
     color: #fff;
-    padding: 12px 25px;
-    border-radius: 6px;
+    padding: 14px 35px;
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 18px;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.checkout-btn button:hover {
+    background-color: #d10f7c;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .order-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .order-card img {
+        width: 100%;
+        height: auto;
+    }
+
+    .address-row {
+        flex-direction: column;
+    }
+
+    .address-button button {
+        width: 100%;
+    }
 }
