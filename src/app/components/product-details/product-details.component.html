@@ -1,1 +1,51 @@
-<div class="container fluid"></div>
+<app-header></app-header>
+
+<div class="container-fluid">
+    <div id="productCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item" data-bs-interval="3000" *ngFor="let img of details.images; let i = index" [class.active]="i === 0">
+                <img [src]="img" class="d-block w-100 carousel-img" alt="Product Image {{ i + 1 }}" />
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <div class="headings mb-3">
+        <div class="left">
+            <h4>{{ details.name }}</h4>
+            <h6>{{ details.type }}</h6>
+            <div class="rating">
+                <ng-container *ngFor="let star of stars; let i = index">
+                    <i [class]="star <= details.rating.score ? 'bi bi-star-fill' : 'bi bi-star'"></i>
+                </ng-container>
+                <span>{{ details.rating.users }}</span>
+            </div>
+        </div>
+        <div class="right">
+            <h5>{{ details.price }}</h5>
+            <h5>
+                <span class="original-price">{{ details.originalPrice }}</span>
+                <span class="discount">{{ details.discount }}</span>
+            </h5>
+        </div>
+    </div>
+
+    <div class="details mb-4">
+        <h3>Product Details</h3>
+        <p>{{ details.details }}</p>
+    </div>
+
+    <div class="buttons mb-5">
+        <button><i class="bi bi-hand-index"></i> Buy Now</button>
+        <button><i class="bi bi-cart3"></i> Add to Cart</button>
+    </div>
+</div>
+
+<app-footer></app-footer>
