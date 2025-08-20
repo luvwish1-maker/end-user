@@ -89,19 +89,9 @@
     font-weight: 500;
 }
 
-.quantity input {
-    width: 60px;
-    padding: 5px 8px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
+.quantity span {
     font-size: 14px;
-    transition: all 0.2s;
-}
-
-.quantity input:focus {
-    outline: none;
-    border-color: #EB147D;
-    box-shadow: 0 0 5px rgba(235, 20, 125, 0.3);
+    font-weight: 500;
 }
 
 /* Summary Section */

@@ -26,7 +26,7 @@
                 <!-- Quantity -->
                 <div class="quantity">
                     <label>Qty:</label>
-                    <input type="number" [(ngModel)]="order.quantity" min="1">
+                    <span>{{ order.quantity }}</span>
                 </div>
             </div>
         </div>
@@ -38,7 +38,7 @@
             <button class="coupon-btn">Select</button>
         </div>
 
-         <hr class="divider">
+        <hr class="divider">
 
         <div class="details">
             <div class="heading">
@@ -61,7 +61,7 @@
             </div>
         </div>
 
-         <hr class="divider">
+        <hr class="divider">
 
         <div class="total">
             <h6>Order Total</h6>
