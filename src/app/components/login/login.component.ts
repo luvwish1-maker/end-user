@@ -18,7 +18,7 @@ export class LoginComponent {
   isSignUp = false;
 
   loadingLogin = false;
-loadingSignup = false;
+  loadingSignup = false;
 
   constructor(
     private fb: FormBuilder,
@@ -58,7 +58,7 @@ loadingSignup = false;
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
       this.loadingLogin = true;
-      this.authService.login( email, password ).subscribe({
+      this.authService.login(email, password).subscribe({
         next: (res) => {
           this.alertService.showAlert({
             message: 'Login successful',

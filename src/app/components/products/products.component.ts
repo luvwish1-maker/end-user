@@ -3,6 +3,7 @@ import { HeaderComponent } from "../../shared/header/header.component";
 import { FooterComponent } from "../../shared/footer/footer.component";
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ProductsService } from './service/products.service';
 
 @Component({
   selector: 'app-products',
@@ -10,7 +11,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './products.component.html',
   styleUrl: './products.component.css'
 })
-export class ProductsComponent implements OnInit{
+export class ProductsComponent implements OnInit {
   categories = [
     {
       id: 1,
@@ -39,74 +40,53 @@ export class ProductsComponent implements OnInit{
     },
   ]
 
-  products = [
-    {
-      id: 1,
-      img: '/product.png',
-      name: 'Period kit + Pain relief patch Combo',
-      price: '2499',
-      originalPrice: '4999',
-      stock: '25',
-      quantity: 1
-    },
-    {
-      id: 2,
-      img: '/product.png',
-      name: 'Period kit + Pain relief patch Combo',
-      price: '2499',
-      originalPrice: '4999',
-      stock: '25',
-      quantity: 1
-    },
-    {
-      id: 3,
-      img: '/product.png',
-      name: 'Period kit + Pain relief patch Combo',
-      price: '2499',
-      originalPrice: '4999',
-      stock: '25',
-      quantity: 1
-    },
-    {
-      id: 4,
-      img: '/product.png',
-      name: 'Period kit + Pain relief patch Combo',
-      price: '2499',
-      originalPrice: '4999',
-      stock: '25',
-      quantity: 1
-    },
-    {
-      id: 5,
-      img: '/product.png',
-      name: 'Period kit + Pain relief patch Combo',
-      price: '2499',
-      originalPrice: '4999',
-      stock: '25',
-      quantity: 1
-    },
-    {
-      id: 6,
-      img: '/product.png',
-      name: 'Period kit + Pain relief patch Combo',
-      price: '2499',
-      originalPrice: '4999',
-      stock: '25',
-      quantity: 1
-    },
-  ]
+  allProducts: any[] = [];
+
+  constructor(
+    private service: ProductsService
+  ) { }
 
   ngOnInit() {
-  this.products.forEach(product => product.quantity = 1);
-}
+    this.loadProducts()
+  }
+
+  loadProducts() {
+    this.service.getProducts().subscribe({
+      next: (res: any) => {
+        this.allProducts = (res.data.data || []).map((product: any) => {
+          const mainImage = (product.images && product.images.length > 0)
+            ? product.images.find((img: any) => img.isMain) || product.images[0]
+            : null;
+
+          return {
+            ...product,
+            img: mainImage?.url || '/assets/images/no-image.png',
+            quantity: 1
+          };
+        });
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+  }
+
 
   increaseQty(product: any) {
-    if (!product.quantity) product.quantity = 1;
-    if (product.quantity < product.stock) product.quantity++;
+    if (product.quantity < product.stockCount) {
+      product.quantity++;
+    }
   }
 
   decreaseQty(product: any) {
-    if (!product.quantity) product.quantity = 1;
-    if (product.quantity > 1) product.quantity--;
+    if (product.quantity > 1) {
+      product.quantity--;
+    }
   }
+
+  onImgError(event: Event) {
+    (event.target as HTMLImageElement).src = '/product.png';
+  }
+
+
 }

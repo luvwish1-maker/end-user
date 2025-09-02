@@ -49,19 +49,19 @@
 
     <!-- Products Grid -->
     <section class="products">
-        <div class="product-card" *ngFor="let product of products">
+        <div class="product-card" *ngFor="let product of allProducts">
             <a>
-                <img [src]="product.img" [alt]="product.name">
+                <img [src]="product.img" [alt]="product.name" (error)="onImgError($event)">
             </a>
             <h5>{{ product.name }}</h5>
             <div class="product-info">
                 <div class="price-stock">
-                    <span class="price">₹{{ product.price }}</span>
-                    <span class="original-price">₹{{ product.originalPrice }}</span>
+                    <span class="price">₹{{ product.discountedPrice }}</span>
+                    <span class="original-price">₹{{ product.actualPrice }}</span>
                 </div>
 
                 <div class="right-side">
-                    <span class="stock">{{ product.stock }} in stock</span>
+                    <span class="stock">{{ product.stockCount }} in stock</span>
 
                     <div class="quantity">
                         <button (click)="decreaseQty(product)">-</button>
