@@ -6,11 +6,10 @@
             <form [class.active]="!isSignUp" class="form-content" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                 <div class="mb-3 position-relative">
                     <i class="bi bi-person icon"></i>
-                    <input type="text" class="form-control" formControlName="username"
-                        placeholder="Username or Email" />
-                    <div *ngIf="lf['username'].touched && lf['username'].invalid" class="text-danger small mt-1">
-                        <div *ngIf="lf['username'].errors?.['required']">Username is required.</div>
-                        <div *ngIf="lf['username'].errors?.['minlength']">At least 3 characters required.</div>
+                    <input type="text" class="form-control" formControlName="email" placeholder="Email" />
+                    <div *ngIf="lf['email'].touched && lf['email'].invalid" class="text-danger small mt-1">
+                        <div *ngIf="lf['email'].errors?.['required']">Email is required.</div>
+                        <div *ngIf="lf['email'].errors?.['minlength']">At least 3 characters required.</div>
                     </div>
                 </div>
 
@@ -27,17 +26,20 @@
                 </div>
 
                 <a href="#" class="forgot-password">Forgot Password?</a>
-                <button type="submit" class="btn-login w-100">Login</button>
+                <button type="submit" class="btn-login w-100" [disabled]="loadingLogin">
+                    <span *ngIf="!loadingLogin">Login</span>
+                    <span *ngIf="loadingLogin" class="spinner"></span>
+                </button>
             </form>
 
-            <form *ngIf="isSignUp" [class.active]="isSignUp" class="form-content" [formGroup]="signupForm" (ngSubmit)="onSubmitSignUp()">
+            <form *ngIf="isSignUp" [class.active]="isSignUp" class="form-content" [formGroup]="signupForm"
+                (ngSubmit)="onSubmitSignUp()">
                 <div class="mb-3 position-relative">
                     <i class="bi bi-person icon"></i>
-                    <input type="text" class="form-control" formControlName="username"
-                        placeholder="Username or Email" />
-                    <div *ngIf="sf['username'].touched && sf['username'].invalid" class="text-danger small mt-1">
-                        <div *ngIf="sf['username'].errors?.['required']">Username is required.</div>
-                        <div *ngIf="sf['username'].errors?.['minlength']">At least 3 characters required.</div>
+                    <input type="text" class="form-control" formControlName="email" placeholder="Email" />
+                    <div *ngIf="sf['email'].touched && sf['email'].invalid" class="text-danger small mt-1">
+                        <div *ngIf="sf['email'].errors?.['required']">Email is required.</div>
+                        <div *ngIf="sf['email'].errors?.['minlength']">At least 3 characters required.</div>
                     </div>
                 </div>
 
@@ -67,7 +69,10 @@
                     Passwords do not match.
                 </div>
 
-                <button type="submit" class="btn-login w-100">Sign Up</button>
+                <button type="submit" class="btn-login w-100" [disabled]="loadingSignup">
+                    <span *ngIf="!loadingSignup">Sign Up</span>
+                    <span *ngIf="loadingSignup" class="spinner"></span>
+                </button>
             </form>
         </div>
 

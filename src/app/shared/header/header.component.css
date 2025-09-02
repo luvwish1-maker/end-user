@@ -28,6 +28,20 @@ header .icons i:hover {
     width: 60px;
 }
 
+.login-btn {
+  background-color: #EB147D;
+  color: #fff;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.login-btn:hover {
+  background-color: #c01168;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     header.header {

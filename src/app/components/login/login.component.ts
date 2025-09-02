@@ -1,6 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { AuthService } from '../../core/interceptor/auth.service';
+import { AlertService } from '../../shared/alert/service/alert.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,14 +17,22 @@ export class LoginComponent {
   signupForm: FormGroup;
   isSignUp = false;
 
-  constructor(private fb: FormBuilder) {
+  loadingLogin = false;
+loadingSignup = false;
+
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private alertService: AlertService,
+    private router: Router
+  ) {
     this.loginForm = this.fb.group({
-      username: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.minLength(3)]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
 
     this.signupForm = this.fb.group({
-      username: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.minLength(3)]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required]
     }, { validators: this.passwordsMatch });
@@ -45,7 +56,30 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
+      const { email, password } = this.loginForm.value;
+      this.loadingLogin = true;
+      this.authService.login( email, password ).subscribe({
+        next: (res) => {
+          this.alertService.showAlert({
+            message: 'Login successful',
+            type: 'success',
+            autoDismiss: true,
+            duration: 4000
+          });
+          this.isSignUp = false
+          this.router.navigate(['/products'])
+          this.loadingLogin = false;
+        },
+        error: (err) => {
+          this.alertService.showAlert({
+            message: err.error.message,
+            type: 'error',
+            autoDismiss: true,
+            duration: 4000
+          });
+          this.loadingLogin = false;
+        }
+      });
     } else {
       this.loginForm.markAllAsTouched();
     }
@@ -53,7 +87,28 @@ export class LoginComponent {
 
   onSubmitSignUp() {
     if (this.signupForm.valid) {
-      console.log('Signup Data:', this.signupForm.value);
+      const { email, password } = this.signupForm.value;
+      this.authService.signup({ email, password }).subscribe({
+        next: (res) => {
+          this.alertService.showAlert({
+            message: 'Signup successful',
+            type: 'success',
+            autoDismiss: true,
+            duration: 4000
+          });
+          this.isSignUp = false;
+          this.loadingSignup = true;
+        },
+        error: (err) => {
+          this.alertService.showAlert({
+            message: err.error.message,
+            type: 'error',
+            autoDismiss: true,
+            duration: 4000
+          });
+          this.loadingSignup = true;
+        }
+      });
     } else {
       this.signupForm.markAllAsTouched();
     }
