@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductsService } from './service/products.service';
 import { Router } from '@angular/router';
+import { AlertService } from '../../shared/alert/service/alert.service';
 
 @Component({
   selector: 'app-products',
@@ -50,7 +51,8 @@ export class ProductsComponent implements OnInit {
 
   constructor(
     private service: ProductsService,
-    private router: Router
+    private router: Router,
+    private alertService: AlertService
   ) { }
 
   ngOnInit() {
@@ -87,7 +89,7 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-    changePage(p: number) {
+  changePage(p: number) {
     if (p < 1 || p > this.totalPages) return;
     this.page = p;
     this.loadProducts();
@@ -113,6 +115,34 @@ export class ProductsComponent implements OnInit {
     if (itm?.id) {
       this.router.navigate([`/products/details`, itm.id]);
     }
+  }
+
+  addToCart(id: string, quantity: number) {
+    const itm = {
+      productId: id,
+      quantity: quantity
+    }
+
+    this.service.addToCart(itm).subscribe({
+      next: (res: any) => {
+        console.log(res);
+        this.alertService.showAlert({
+          message: 'Added to cart',
+          type: 'success',
+          autoDismiss: true,
+          duration: 4000
+        });
+      },
+      error: (err) => {
+        this.alertService.showAlert({
+          message: err.error.message,
+          type: 'error',
+          autoDismiss: true,
+          duration: 4000
+        });
+      }
+    })
+
   }
 
 }

@@ -63,16 +63,16 @@
                 <div class="right-side">
                     <span class="stock">{{ product.stockCount }} in stock</span>
 
-                    <div class="quantity">
+                    <div class="quantity" (click)="$event.stopPropagation()">
                         <button (click)="decreaseQty(product)">-</button>
                         <input type="number" [(ngModel)]="product.quantity" min="1" [max]="product.stock">
                         <button (click)="increaseQty(product)">+</button>
                     </div>
                 </div>
             </div>
-            <div class="product-buttons">
+            <div class="product-buttons" (click)="$event.stopPropagation()">
                 <button class="buy"><i class="bi bi-hand-index"></i> Buy Now</button>
-                <button class="cart"><i class="bi bi-cart3"></i> Add to Cart</button>
+                <button class="cart" (click)="addToCart(product.id, product.quantity)"><i class="bi bi-cart3"></i> Add to Cart</button>
             </div>
         </div>
 
