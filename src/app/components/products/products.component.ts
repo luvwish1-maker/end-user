@@ -42,6 +42,11 @@ export class ProductsComponent implements OnInit {
   ]
 
   allProducts: any[] = [];
+  page = 1;
+  limit = 8;
+  totalPages = 1;
+  totalPagesArray: number[] = [];
+  total = 0;
 
   constructor(
     private service: ProductsService,
@@ -53,7 +58,12 @@ export class ProductsComponent implements OnInit {
   }
 
   loadProducts() {
-    this.service.getProducts().subscribe({
+    const params = {
+      limit: this.limit,
+      page: this.page
+    };
+
+    this.service.getProducts(params).subscribe({
       next: (res: any) => {
         this.allProducts = (res.data.data || []).map((product: any) => {
           const mainImage = (product.images && product.images.length > 0)
@@ -66,6 +76,10 @@ export class ProductsComponent implements OnInit {
             quantity: 1
           };
         });
+
+        this.total = res.data.meta?.total || 0;
+        this.totalPages = res.data.meta?.totalPages || 1;
+        this.totalPagesArray = Array.from({ length: this.totalPages }, (_, i) => i + 1);
       },
       error: (err) => {
         console.error(err);
@@ -73,6 +87,11 @@ export class ProductsComponent implements OnInit {
     });
   }
 
+    changePage(p: number) {
+    if (p < 1 || p > this.totalPages) return;
+    this.page = p;
+    this.loadProducts();
+  }
 
   increaseQty(product: any) {
     if (product.quantity < product.stockCount) {
