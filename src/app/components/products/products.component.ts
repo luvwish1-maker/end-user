@@ -4,6 +4,7 @@ import { FooterComponent } from "../../shared/footer/footer.component";
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductsService } from './service/products.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-products',
@@ -43,7 +44,8 @@ export class ProductsComponent implements OnInit {
   allProducts: any[] = [];
 
   constructor(
-    private service: ProductsService
+    private service: ProductsService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -88,5 +90,10 @@ export class ProductsComponent implements OnInit {
     (event.target as HTMLImageElement).src = '/product.png';
   }
 
+  gotoDetail(itm: any) {
+    if (itm?.id) {
+      this.router.navigate([`/products/details`, itm.id]);
+    }
+  }
 
 }

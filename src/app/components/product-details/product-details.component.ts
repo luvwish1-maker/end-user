@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from "../../shared/header/header.component";
 import { FooterComponent } from "../../shared/footer/footer.component";
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { ProductsService } from '../products/service/products.service';
 
 @Component({
   selector: 'app-product-details',
@@ -9,7 +11,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.css'
 })
-export class ProductDetailsComponent {
+export class ProductDetailsComponent implements OnInit {
   details = {
     id: 1,
     images: [
@@ -32,5 +34,32 @@ export class ProductDetailsComponent {
   }
 
   stars = [1, 2, 3, 4, 5];
+
+  productId!: string;
+  product!: any;
+
+  constructor(
+    private route: ActivatedRoute,
+    private service: ProductsService
+  ) { }
+
+  ngOnInit(): void {
+    this.productId = this.route.snapshot.paramMap.get('id')!;
+    if (this.productId) {
+      this.loadProductDetails(this.productId);
+    }
+  }
+
+  loadProductDetails(id: string) {
+    this.service.getProductByID(id).subscribe({
+      next: (res: any) => {
+        this.product = res.data;
+        console.log(res);
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    })
+  }
 
 }

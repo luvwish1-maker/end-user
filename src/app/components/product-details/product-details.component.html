@@ -3,9 +3,9 @@
 <div class="container-fluid">
     <div id="productCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
         <div class="carousel-inner">
-            <div class="carousel-item" data-bs-interval="3000" *ngFor="let img of details.images; let i = index"
+            <div class="carousel-item" data-bs-interval="3000" *ngFor="let img of product.images; let i = index"
                 [class.active]="i === 0">
-                <img [src]="img" class="d-block w-100 carousel-img" alt="Product Image {{ i + 1 }}" />
+                <img [src]="img.url" class="d-block w-100 carousel-img" alt="Product Image {{ i + 1 }}" />
             </div>
         </div>
 
@@ -28,8 +28,8 @@
 
     <div class="headings mb-3">
         <div class="left">
-            <h4>{{ details.name }}</h4>
-            <h6>{{ details.type }}</h6>
+            <h4>{{ product.name }}</h4>
+            <h6>{{ product.categoryName }}</h6>
             <div class="rating">
                 <ng-container *ngFor="let star of stars; let i = index">
                     <i [class]="star <= details.rating.score ? 'bi bi-star-fill' : 'bi bi-star'"></i>
@@ -38,9 +38,9 @@
             </div>
         </div>
         <div class="right">
-            <h5>Rs {{ details.price }}</h5>
+            <h5>Rs {{ product.discountedPrice }}</h5>
             <h5>
-                <span class="original-price">Rs {{ details.originalPrice }}</span>
+                <span class="original-price">Rs {{ product.actualPrice }}</span>
                 <span class="discount">{{ details.discount }}</span>
             </h5>
         </div>
@@ -48,7 +48,7 @@
 
     <div class="details mb-4">
         <h3>Product Details</h3>
-        <p>{{ details.details }}</p>
+        <p>{{ product.description }}</p>
     </div>
 
     <div class="buttons mb-5">

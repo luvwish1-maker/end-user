@@ -49,7 +49,7 @@
 
     <!-- Products Grid -->
     <section class="products">
-        <div class="product-card" *ngFor="let product of allProducts">
+        <div class="product-card" (click)="gotoDetail(product)" *ngFor="let product of allProducts">
             <a>
                 <img [src]="product.img" [alt]="product.name" (error)="onImgError($event)">
             </a>
