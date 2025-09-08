@@ -12,6 +12,7 @@ header.header {
 header .logo img {
     height: 50px;
     max-width: 100%;
+    cursor: pointer;
 }
 
 header .icons i {

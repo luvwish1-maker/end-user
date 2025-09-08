@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../../../environment/environment';
 
 interface LoginResponse {
@@ -24,6 +24,8 @@ export class AuthService {
   private readonly userKey = 'user';
   private baseUrl = `${environment.apiUrl}/auth`
 
+  private loggedIn$ = new BehaviorSubject<boolean>(this.isLoggedIn());
+
   constructor(private http: HttpClient) { }
 
   login(email: string, password: string): Observable<LoginResponse> {
@@ -32,6 +34,7 @@ export class AuthService {
         if (response.data.access_token) {
           localStorage.setItem(this.tokenKey, response.data.access_token);
           localStorage.setItem(this.userKey, JSON.stringify(response.data.user));
+          this.loggedIn$.next(true);
         }
       })
     );
@@ -40,6 +43,7 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem(this.tokenKey);
     localStorage.removeItem(this.userKey);
+    this.loggedIn$.next(false);
   }
 
   getToken(): string | null {
@@ -54,6 +58,10 @@ export class AuthService {
   isLoggedIn(): boolean {
     const token = this.getToken();
     return token !== null && !this.isTokenExpired(token);
+  }
+
+  isLoggedIn$(): Observable<boolean> {
+    return this.loggedIn$.asObservable();
   }
 
   private isTokenExpired(token: string): boolean {

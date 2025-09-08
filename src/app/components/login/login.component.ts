@@ -4,6 +4,7 @@ import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validatio
 import { AuthService } from '../../core/interceptor/auth.service';
 import { AlertService } from '../../shared/alert/service/alert.service';
 import { Router } from '@angular/router';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-login',
@@ -20,11 +21,14 @@ export class LoginComponent {
   loadingLogin = false;
   loadingSignup = false;
 
+  isModal = false;
+
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private alertService: AlertService,
-    private router: Router
+    private router: Router,
+    private activeModal: NgbActiveModal
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.minLength(3)]],
@@ -67,7 +71,11 @@ export class LoginComponent {
             duration: 4000
           });
           this.isSignUp = false
-          this.router.navigate(['/products'])
+          if (this.isModal) {
+            this.activeModal.close(true);
+          } else {
+            this.router.navigate(['/products']);
+          }
           this.loadingLogin = false;
         },
         error: (err) => {

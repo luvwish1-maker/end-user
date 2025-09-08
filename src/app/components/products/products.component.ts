@@ -6,6 +6,9 @@ import { FormsModule } from '@angular/forms';
 import { ProductsService } from './service/products.service';
 import { Router } from '@angular/router';
 import { AlertService } from '../../shared/alert/service/alert.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from '../../core/interceptor/auth.service';
+import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-products',
@@ -52,7 +55,9 @@ export class ProductsComponent implements OnInit {
   constructor(
     private service: ProductsService,
     private router: Router,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private modalService: NgbModal,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -118,6 +123,27 @@ export class ProductsComponent implements OnInit {
   }
 
   addToCart(id: string, quantity: number) {
+
+    if (!this.authService.isLoggedIn()) {
+      this.alertService.showAlert({
+        message: 'Please log in to add items to your cart',
+        type: 'warning',
+        autoDismiss: true,
+        duration: 4000
+      });
+
+      const modalRef = this.modalService.open(LoginComponent, { centered: true, size: 'md' });
+      modalRef.componentInstance.isModal = true
+
+      modalRef.result.then((result) => {
+        if (result) {
+          this.addToCart(id, quantity);
+        }
+      }).catch(() => { });
+
+      return;
+    }
+
     const itm = {
       productId: id,
       quantity: quantity
@@ -125,7 +151,6 @@ export class ProductsComponent implements OnInit {
 
     this.service.addToCart(itm).subscribe({
       next: (res: any) => {
-        console.log(res);
         this.alertService.showAlert({
           message: 'Added to cart',
           type: 'success',

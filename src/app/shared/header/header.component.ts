@@ -21,7 +21,9 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.isLoggedIn = this.authService.isLoggedIn();
+    this.authService.isLoggedIn$().subscribe(status => {
+      this.isLoggedIn = status;
+    });
   }
 
   login() {
@@ -31,5 +33,9 @@ export class HeaderComponent implements OnInit {
   logout() {
     this.authService.logout();
     this.isLoggedIn = false;
+  }
+
+  goTo() {
+    this.router.navigate(['/products'])
   }
 }
