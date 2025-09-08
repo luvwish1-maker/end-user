@@ -132,6 +132,9 @@ export class ProductsComponent implements OnInit {
         duration: 4000
       });
 
+      const buttonElement = document.activeElement as HTMLElement;
+      buttonElement.blur();
+
       const modalRef = this.modalService.open(LoginComponent, { centered: true, size: 'md' });
       modalRef.componentInstance.isModal = true
 
