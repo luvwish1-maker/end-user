@@ -114,7 +114,7 @@ export class LoginComponent {
             autoDismiss: true,
             duration: 4000
           });
-          this.loadingSignup = true;
+          this.loadingSignup = false;
         }
       });
     } else {
