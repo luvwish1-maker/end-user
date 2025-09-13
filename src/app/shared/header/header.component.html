@@ -2,7 +2,7 @@
     <div class="left-placeholder"></div>
 
     <div class="logo">
-        <img src="/logo.png" alt="Logo" (click)="goTo()"/>
+        <img src="/logo.png" alt="Logo" (click)="goTo()" />
     </div>
 
     <div class="icons d-flex align-items-center gap-3">
@@ -16,6 +16,7 @@
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                 <li><a class="dropdown-item" href="#">My Orders</a></li>
                 <li><a class="dropdown-item" href="#">My Wishlist</a></li>
+                <li><a class="dropdown-item" routerLink="/cart">My Cart</a></li>
                 <li><a class="dropdown-item" routerLink="/profile">My Profile</a></li>
                 <li><a class="dropdown-item" href="#">Help Center</a></li>
                 <li>

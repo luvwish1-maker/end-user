@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ProfileService {
 
-  private BaseUrl = `${environment.apiUrl}/auth/customer`
+  private BaseUrl = `${environment.apiUrl}/auth`
 
   constructor(
     private http: HttpClient

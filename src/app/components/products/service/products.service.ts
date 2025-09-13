@@ -14,15 +14,27 @@ export class ProductsService {
     private http: HttpClient
   ) { }
 
-  getProducts(params?:any){    
-    return this.http.get(`${this.BaseUrl}`, {params})
+  getProducts(params?: any) {
+    return this.http.get(`${this.BaseUrl}`, { params })
   }
 
-  getProductByID(id:string){
+  getProductByID(id: string) {
     return this.http.get(`${this.BaseUrl}/${id}`)
   }
 
-  addToCart(itm: any){
+  addToCart(itm: any) {
     return this.http.post(`${this.CartUrl}/add`, itm)
+  }
+
+  getCart() {
+    return this.http.get(`${this.CartUrl}`)
+  }
+
+  removeCartItem(id: string, itm: any) {
+    return this.http.delete(`${this.CartUrl}/${id}`, itm)
+  }
+
+  updateCartItem(id: string, itm: any) {
+    return this.http.patch(`${this.CartUrl}/${id}`, itm)
   }
 }
