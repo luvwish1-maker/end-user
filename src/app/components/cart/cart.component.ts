@@ -5,6 +5,7 @@ import { HeaderComponent } from "../../shared/header/header.component";
 import { FooterComponent } from "../../shared/footer/footer.component";
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { AlertService } from '../../shared/alert/service/alert.service';
 
 @Component({
   selector: 'app-cart',
@@ -18,7 +19,8 @@ export class CartComponent implements OnInit {
 
   constructor(
     private service: ProductsService,
-    private router: Router
+    private router: Router,
+    private alertService: AlertService
   ) { }
 
   ngOnInit(): void {
@@ -31,8 +33,6 @@ export class CartComponent implements OnInit {
       next: (res: any) => {
         this.allProducts = (res.data || []).map((item: any) => {
           const prod = item.product || null;
-
-          console.log(prod);
 
           if (!prod) {
             return {
@@ -86,6 +86,51 @@ export class CartComponent implements OnInit {
     if (itm?.id) {
       this.router.navigate([`/products/details`, itm.id]);
     }
+  }
+
+  updateCart(product: any) {
+    const body = { quantity: product.quantity };
+
+    this.service.updateCartItem(product.id, body).subscribe({
+      next: () => {
+        this.alertService.showAlert({
+          message: 'Item updated',
+          type: 'success',
+          autoDismiss: true,
+          duration: 4000
+        });
+      },
+      error: (err) => {
+        this.alertService.showAlert({
+          message: err.error.message,
+          type: 'error',
+          autoDismiss: true,
+          duration: 4000
+        });
+      }
+    });
+  }
+
+  removeCart(product: any) {
+    this.service.removeCartItem(product.id, {}).subscribe({
+      next: () => {
+        this.alertService.showAlert({
+          message: 'Item removed from cart',
+          type: 'success',
+          autoDismiss: true,
+          duration: 4000
+        });
+        this.allProducts = this.allProducts.filter(p => p.id !== product.id);
+      },
+      error: (err) => {
+        this.alertService.showAlert({
+          message: err.error.message,
+          type: 'error',
+          autoDismiss: true,
+          duration: 4000
+        });
+      }
+    });
   }
 
 }

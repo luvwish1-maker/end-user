@@ -25,6 +25,8 @@
             </div>
             <div class="product-buttons" (click)="$event.stopPropagation()">
                 <button class="buy"><i class="bi bi-hand-index"></i> Buy Now</button>
+                <button class="cart" (click)="updateCart(product)"><i class="bi bi-arrow-repeat"></i> Update</button>
+                <button class="cart" (click)="removeCart(product)"><i class="bi bi-trash"></i> Remove</button>
             </div>
         </div>
     </section>
