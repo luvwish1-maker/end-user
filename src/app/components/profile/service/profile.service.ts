@@ -14,7 +14,7 @@ export class ProfileService {
   ) { }
 
   getProfile() {
-    return this.http.get(`${this.BaseUrl}/profile`)
+    return this.http.get(`${this.BaseUrl}/customer/profile`)
   }
 
   createProfile(itm: any) {

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Optional } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { AuthService } from '../../core/interceptor/auth.service';
 import { AlertService } from '../../shared/alert/service/alert.service';
@@ -28,7 +28,7 @@ export class LoginComponent {
     private authService: AuthService,
     private alertService: AlertService,
     private router: Router,
-    private activeModal: NgbActiveModal
+    @Optional() private activeModal: NgbActiveModal
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.minLength(3)]],

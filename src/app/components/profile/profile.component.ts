@@ -74,9 +74,7 @@ export class ProfileComponent implements OnInit {
 
     const payload = this.profileForm.value;
 
-    const request$ = this.profile?.CustomerProfile
-      ? this.service.updateProfile(payload)
-      : this.service.createProfile(payload);
+    const request$ = this.service.updateProfile(payload)
 
     request$.subscribe({
       next: (res: any) => {
