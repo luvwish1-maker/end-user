@@ -1,47 +1,53 @@
 <app-header></app-header>
 
-<div class="loader-overlay" *ngIf="isLoading">
-    <div class="spinner"></div>
-</div>
-
 <div class="container-fluid">
-    <section class="products">
-        <div class="product-card" (click)="gotoDetail(product)" *ngFor="let product of allProducts">
-            <a>
-                <img [src]="product.img" [alt]="product.name" (error)="onImgError($event)">
-            </a>
-            <h5>{{ product.name }}</h5>
-            <div class="product-info">
-                <div class="price-stock">
-                    <span class="price">₹{{ product.discountedPrice }}</span>
-                    <span class="original-price">₹{{ product.actualPrice }}</span>
-                </div>
+    <ng-container *ngIf="isLoading; else productList">
+        <div class="container-loader">
+            <div class="spinner"></div>
+        </div>
+    </ng-container>
 
-                <div class="right-side">
-                    <span class="stock">{{ product.stockCount }} in stock</span>
+    <ng-template #productList>
+        <section class="products">
+            <div class="product-card" (click)="gotoDetail(product)" *ngFor="let product of allProducts">
+                <a>
+                    <img [src]="product.img" [alt]="product.name" (error)="onImgError($event)">
+                </a>
+                <h5>{{ product.name }}</h5>
+                <div class="product-info">
+                    <div class="price-stock">
+                        <span class="price">₹{{ product.discountedPrice }}</span>
+                        <span class="original-price">₹{{ product.actualPrice }}</span>
+                    </div>
 
-                    <div class="quantity" (click)="$event.stopPropagation()">
-                        <button (click)="decreaseQty(product)">-</button>
-                        <input type="number" [(ngModel)]="product.quantity" min="1" [max]="product.stock">
-                        <button (click)="increaseQty(product)">+</button>
+                    <div class="right-side">
+                        <span class="stock">{{ product.stockCount }} in stock</span>
+
+                        <div class="quantity" (click)="$event.stopPropagation()">
+                            <button (click)="decreaseQty(product)">-</button>
+                            <input type="number" [(ngModel)]="product.quantity" min="1" [max]="product.stock">
+                            <button (click)="increaseQty(product)">+</button>
+                        </div>
                     </div>
                 </div>
+                <div class="product-buttons" (click)="$event.stopPropagation()">
+                    <button class="buy"><i class="bi bi-hand-index"></i> Buy Now</button>
+                    <button class="btn btn-primary btn-sm" (click)="updateCart(product)"
+                        [disabled]="loadingUpdate[product.productId]">
+                        <span *ngIf="loadingUpdate[product.productId]"
+                            class="spinner-border spinner-border-sm me-2"></span>
+                        Update
+                    </button>
+                    <button class="btn btn-danger btn-sm" (click)="removeCart(product)"
+                        [disabled]="loadingRemove[product.productId]">
+                        <span *ngIf="loadingRemove[product.productId]"
+                            class="spinner-border spinner-border-sm me-2"></span>
+                        Remove
+                    </button>
+                </div>
             </div>
-            <div class="product-buttons" (click)="$event.stopPropagation()">
-                <button class="buy"><i class="bi bi-hand-index"></i> Buy Now</button>
-                <button class="btn btn-primary btn-sm" (click)="updateCart(product)"
-                    [disabled]="loadingUpdate[product.productId]">
-                    <span *ngIf="loadingUpdate[product.productId]" class="spinner-border spinner-border-sm me-2"></span>
-                    Update
-                </button>
-                <button class="btn btn-danger btn-sm" (click)="removeCart(product)"
-                    [disabled]="loadingRemove[product.productId]">
-                    <span *ngIf="loadingRemove[product.productId]" class="spinner-border spinner-border-sm me-2"></span>
-                    Remove
-                </button>
-            </div>
-        </div>
-    </section>
+        </section>
+    </ng-template>
 </div>
 
 <app-footer></app-footer>

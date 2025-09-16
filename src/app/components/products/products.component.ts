@@ -51,6 +51,7 @@ export class ProductsComponent implements OnInit {
   totalPages = 1;
   totalPagesArray: number[] = [];
   total = 0;
+  isLoading = false;
 
   constructor(
     private service: ProductsService,
@@ -65,6 +66,7 @@ export class ProductsComponent implements OnInit {
   }
 
   loadProducts() {
+    this.isLoading = true;
     const params = {
       limit: this.limit,
       page: this.page
@@ -90,6 +92,9 @@ export class ProductsComponent implements OnInit {
       },
       error: (err) => {
         console.error(err);
+      },
+      complete: () => {
+        this.isLoading = false;
       }
     });
   }

@@ -47,8 +47,12 @@
         <button>View All <i class="bi bi-arrow-right"></i></button>
     </section>
 
+    <div *ngIf="isLoading" class="products-loader">
+        <div class="spinner"></div>
+    </div>
+
     <!-- Products Grid -->
-    <section class="products">
+    <section class="products" *ngIf="!isLoading">
         <div class="product-card" (click)="gotoDetail(product)" *ngFor="let product of allProducts">
             <a>
                 <img [src]="product.img" [alt]="product.name" (error)="onImgError($event)">
@@ -72,13 +76,14 @@
             </div>
             <div class="product-buttons" (click)="$event.stopPropagation()">
                 <button class="buy"><i class="bi bi-hand-index"></i> Buy Now</button>
-                <button class="cart" (click)="addToCart(product.id, product.quantity)"><i class="bi bi-cart3"></i> Add to Cart</button>
+                <button class="cart" (click)="addToCart(product.id, product.quantity)"><i class="bi bi-cart3"></i> Add
+                    to Cart</button>
             </div>
         </div>
 
     </section>
 
-    <nav *ngIf="totalPages > 1" class="mt-4">
+    <nav *ngIf="!isLoading && totalPages > 1" class="mt-4">
         <ul class="pagination justify-content-center">
             <li class="page-item" [class.disabled]="page === 1">
                 <a class="page-link" (click)="changePage(page - 1)">Previous</a>
