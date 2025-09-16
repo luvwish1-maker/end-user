@@ -30,11 +30,11 @@ export class ProductsService {
     return this.http.get(`${this.CartUrl}`)
   }
 
-  removeCartItem(id: string, itm: any) {
-    return this.http.delete(`${this.CartUrl}/${id}`, itm)
+  removeCartItem(id: string, itm:any) {    
+    return this.http.patch(`${this.CartUrl}/remove-from-cart/${id}`, itm)
   }
 
   updateCartItem(id: string, itm: any) {
-    return this.http.patch(`${this.CartUrl}/${id}`, itm)
+    return this.http.patch(`${this.CartUrl}/add-to-cart/${id}`, itm)
   }
 }

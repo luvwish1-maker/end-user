@@ -1,5 +1,9 @@
 <app-header></app-header>
 
+<div class="loader-overlay" *ngIf="isLoading">
+    <div class="spinner"></div>
+</div>
+
 <div class="container-fluid">
     <section class="products">
         <div class="product-card" (click)="gotoDetail(product)" *ngFor="let product of allProducts">
@@ -25,8 +29,16 @@
             </div>
             <div class="product-buttons" (click)="$event.stopPropagation()">
                 <button class="buy"><i class="bi bi-hand-index"></i> Buy Now</button>
-                <button class="cart" (click)="updateCart(product)"><i class="bi bi-arrow-repeat"></i> Update</button>
-                <button class="cart" (click)="removeCart(product)"><i class="bi bi-trash"></i> Remove</button>
+                <button class="btn btn-primary btn-sm" (click)="updateCart(product)"
+                    [disabled]="loadingUpdate[product.productId]">
+                    <span *ngIf="loadingUpdate[product.productId]" class="spinner-border spinner-border-sm me-2"></span>
+                    Update
+                </button>
+                <button class="btn btn-danger btn-sm" (click)="removeCart(product)"
+                    [disabled]="loadingRemove[product.productId]">
+                    <span *ngIf="loadingRemove[product.productId]" class="spinner-border spinner-border-sm me-2"></span>
+                    Remove
+                </button>
             </div>
         </div>
     </section>

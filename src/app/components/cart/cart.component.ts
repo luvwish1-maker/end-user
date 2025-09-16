@@ -16,6 +16,10 @@ import { AlertService } from '../../shared/alert/service/alert.service';
 export class CartComponent implements OnInit {
 
   allProducts: any[] = [];
+  fullObjects: any[] = [];
+  isLoading: boolean = false;
+  loadingUpdate: { [key: string]: boolean } = {};
+  loadingRemove: { [key: string]: boolean } = {};
 
   constructor(
     private service: ProductsService,
@@ -25,12 +29,14 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCart()
-    console.log(this.allProducts);
   }
 
   loadCart() {
+    this.isLoading = true;
     this.service.getCart().subscribe({
       next: (res: any) => {
+        this.fullObjects = res.data;
+
         this.allProducts = (res.data || []).map((item: any) => {
           const prod = item.product || null;
 
@@ -59,9 +65,11 @@ export class CartComponent implements OnInit {
             unavailable: false
           };
         });
+        this.isLoading = false;
       },
       error: (err) => {
-        console.log(err);
+        console.error(err);
+        this.isLoading = false;
       }
     });
   }
@@ -89,16 +97,20 @@ export class CartComponent implements OnInit {
   }
 
   updateCart(product: any) {
-    const body = { quantity: product.quantity };
+    const cartItem = this.fullObjects.find(item => item.productId === product.productId);
+    if (!cartItem) return;
 
-    this.service.updateCartItem(product.id, body).subscribe({
+    this.loadingUpdate[product.productId] = true;
+
+    this.service.updateCartItem(cartItem.id, { quantity: product.quantity }).subscribe({
       next: () => {
         this.alertService.showAlert({
-          message: 'Item updated',
+          message: 'Cart updated successfully',
           type: 'success',
           autoDismiss: true,
           duration: 4000
         });
+        this.loadingUpdate[product.productId] = false;
       },
       error: (err) => {
         this.alertService.showAlert({
@@ -107,12 +119,18 @@ export class CartComponent implements OnInit {
           autoDismiss: true,
           duration: 4000
         });
+        this.loadingUpdate[product.productId] = false;
       }
     });
   }
 
   removeCart(product: any) {
-    this.service.removeCartItem(product.id, {}).subscribe({
+    const cartItem = this.fullObjects.find(item => item.productId === product.productId);
+    if (!cartItem) return;
+
+    this.loadingRemove[product.productId] = true;
+
+    this.service.removeCartItem(cartItem.id, {}).subscribe({
       next: () => {
         this.alertService.showAlert({
           message: 'Item removed from cart',
@@ -120,7 +138,11 @@ export class CartComponent implements OnInit {
           autoDismiss: true,
           duration: 4000
         });
-        this.allProducts = this.allProducts.filter(p => p.id !== product.id);
+
+        // this.fullObjects = this.fullObjects.filter(itm => itm.productId !== product.productId);
+        // this.allProducts = this.allProducts.filter(itm => itm.productId !== product.productId);
+        this.loadingRemove[product.productId] = false;
+        this.loadCart()
       },
       error: (err) => {
         this.alertService.showAlert({
@@ -129,6 +151,7 @@ export class CartComponent implements OnInit {
           autoDismiss: true,
           duration: 4000
         });
+        this.loadingRemove[product.productId] = false;
       }
     });
   }
