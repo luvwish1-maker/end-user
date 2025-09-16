@@ -38,7 +38,6 @@ export class ProfileComponent implements OnInit {
     this.loading = true;
     this.service.getProfile().subscribe({
       next: (res: any) => {
-        console.log(res);
 
         this.profile = res.data;
         if (this.profile.CustomerProfile) {
