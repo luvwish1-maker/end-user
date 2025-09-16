@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ProfileService } from './service/profile.service';
 import { HeaderComponent } from "../../shared/header/header.component";
 import { FooterComponent } from "../../shared/footer/footer.component";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AlertService } from '../../shared/alert/service/alert.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-profile',
@@ -16,30 +18,37 @@ export class ProfileComponent implements OnInit {
   profileForm!: FormGroup;
   passwordForm!: FormGroup;
   editMode = false;
-  changePasswordMode = false;
+  loading = false;
+  passwordLoading = false;
 
   constructor(
     private service: ProfileService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private alertService: AlertService,
+    private modalService: NgbModal
   ) { }
 
   ngOnInit(): void {
-    this.loadProfile()
-
-    this.profileFormInit()
-    this.passwordFormInit()
+    this.loadProfile();
+    this.profileFormInit();
+    this.passwordFormInit();
   }
 
   loadProfile() {
+    this.loading = true;
     this.service.getProfile().subscribe({
       next: (res: any) => {
+        console.log(res);
+
         this.profile = res.data;
         if (this.profile.CustomerProfile) {
           this.profileForm.patchValue(this.profile.CustomerProfile);
         }
+        this.loading = false;
       },
       error: (err) => {
         console.error(err);
+        this.loading = false;
       }
     });
   }
@@ -72,42 +81,32 @@ export class ProfileComponent implements OnInit {
   saveProfile() {
     if (this.profileForm.invalid) return;
 
+    this.loading = true;
     const payload = this.profileForm.value;
 
-    const request$ = this.service.updateProfile(payload)
-
-    request$.subscribe({
+    this.service.updateProfile(payload).subscribe({
       next: (res: any) => {
-        this.profile = res.data;
+        this.profile.CustomerProfile = res.data;
+
         this.editMode = false;
-        this.profileForm.patchValue(this.profile.CustomerProfile);
+        this.loading = false;
+        this.alertService.showAlert({
+          message: 'Profile updated successfully',
+          type: 'success',
+          autoDismiss: true,
+          duration: 3000
+        });
       },
-      error: (err) => console.error(err)
-    });
-  }
-
-  toggleChangePassword() {
-    this.changePasswordMode = !this.changePasswordMode;
-  }
-
-  changePassword() {
-    if (this.passwordForm.invalid) return;
-
-    if (this.passwordForm.value.newPassword !== this.passwordForm.value.confirmPassword) {
-      alert("New passwords do not match!");
-      return;
-    }
-
-    this.service.updatePassword({
-      currentPassword: this.passwordForm.value.currentPassword,
-      newPassword: this.passwordForm.value.newPassword
-    }).subscribe({
-      next: () => {
-        alert("Password updated successfully!");
-        this.changePasswordMode = false;
-        this.passwordForm.reset();
-      },
-      error: (err) => console.error(err)
+      error: (err) => {
+        console.error(err);
+        this.loading = false;
+        this.alertService.showAlert({
+          message: err.error.message,
+          type: 'error',
+          autoDismiss: true,
+          duration: 4000
+        });
+      }
     });
   }
 
@@ -118,4 +117,42 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  openChangePasswordModal(content: TemplateRef<any>) {
+    this.passwordForm.reset();
+    this.modalService.open(content, { centered: true });
+  }
+
+  changePassword(modalRef: any) {
+    if (this.passwordForm.invalid) return;
+    if (this.passwordForm.value.newPassword !== this.passwordForm.value.confirmPassword) {
+      alert("New passwords do not match!");
+      return;
+    }
+
+    this.passwordLoading = true;
+    this.service.updatePassword({
+      currentPassword: this.passwordForm.value.currentPassword,
+      newPassword: this.passwordForm.value.newPassword
+    }).subscribe({
+      next: () => {
+        this.passwordLoading = false;
+        modalRef.close();
+        this.alertService.showAlert({
+          message: 'Password Changed',
+          type: 'success',
+          autoDismiss: true,
+          duration: 4000
+        });
+      },
+      error: (err) => {
+        this.passwordLoading = false;
+        this.alertService.showAlert({
+          message: err.error.message,
+          type: 'error',
+          autoDismiss: true,
+          duration: 4000
+        });
+      }
+    });
+  }
 }
