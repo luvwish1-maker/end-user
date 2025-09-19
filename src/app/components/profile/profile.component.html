@@ -77,11 +77,16 @@
             <button class="btn btn-outline-primary" (click)="enableEdit()">Edit Profile</button>
         </div>
 
-        <div class="card mt-3 p-3" *ngIf="bankDetails">
-            <h6>Bank Details</h6>
-            <p><strong>Account Number:</strong> {{ bankDetails.accountNumber }}</p>
-            <p><strong>Account Holder:</strong> {{ bankDetails.accountHolderName }}</p>
-            <p><strong>IFSC Code:</strong> {{ bankDetails.ifscCode }}</p>
+        <div class="card mt-4 p-3" *ngIf="bankDetails?.length">
+            <h5>Saved Bank Details</h5>
+            <div *ngFor="let bank of bankDetails" class="border rounded p-2 mb-2">
+                <p><strong>Account Number:</strong> {{ bank.accountNumber }}</p>
+                <p><strong>Account Holder:</strong> {{ bank.accountHolderName }}</p>
+                <p><strong>IFSC Code:</strong> {{ bank.ifscCode }}</p>
+                <button class="btn btn-sm btn-outline-primary me-2"
+                    (click)="openBankDetailsModal(bankDetailsModal, bank)">Edit</button>
+                <button class="btn btn-sm btn-outline-danger" (click)="deleteBankDetail(bank.id)">Delete</button>
+            </div>
         </div>
 
         <!-- Change Password Modal Trigger -->
@@ -131,7 +136,9 @@
 <!-- Bank Details Modal -->
 <ng-template #bankDetailsModal let-modal>
     <div class="modal-header">
-        <h5 class="modal-title">Add Bank Details</h5>
+        <h5 class="modal-title">
+            {{ editingBankId ? 'Edit Bank Details' : 'Add Bank Details' }}
+        </h5>
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
     </div>
 

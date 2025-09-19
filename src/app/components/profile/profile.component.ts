@@ -22,7 +22,8 @@ export class ProfileComponent implements OnInit {
   passwordLoading = false;
   bankForm!: FormGroup;
   bankLoading = false;
-  bankDetails: any = null;
+  bankDetails: any[] = [];
+  editingBankId: string | null = null;
 
   constructor(
     private service: ProfileService,
@@ -60,7 +61,10 @@ export class ProfileComponent implements OnInit {
   loadBankDetails() {
     this.service.getBankDetails().subscribe({
       next: (res: any) => {
-        this.bankDetails = res;
+        this.bankDetails = res.data;
+      },
+      error: (err) => {
+        console.error(err);
       }
     });
   }
@@ -145,11 +149,17 @@ export class ProfileComponent implements OnInit {
     this.modalService.open(content, { centered: true });
   }
 
-  openBankDetailsModal(content: TemplateRef<any>) {
+  openBankDetailsModal(content: TemplateRef<any>, bank?: any) {
+    if (bank) {
+      this.editingBankId = bank.id;
+      this.bankForm.patchValue(bank);
+    } else {
+      this.editingBankId = null;
+      this.bankForm.reset();
+    }
     const buttonElement = document.activeElement as HTMLElement;
     buttonElement.blur();
 
-    this.bankForm.reset();
     this.modalService.open(content, { centered: true });
   }
 
@@ -191,21 +201,27 @@ export class ProfileComponent implements OnInit {
     if (this.bankForm.invalid) return;
 
     this.bankLoading = true;
-    this.service.addBankDetails(this.bankForm.value).subscribe({
+
+    const action$ = this.editingBankId
+      ? this.service.updateBankDetails({ ...this.bankForm.value, id: this.editingBankId })
+      : this.service.addBankDetails(this.bankForm.value);
+
+    action$.subscribe({
       next: () => {
         this.bankLoading = false;
         modalRef.close();
+        this.loadBankDetails();
         this.alertService.showAlert({
-          message: 'Bank details added successfully',
+          message: this.editingBankId ? 'Bank details updated' : 'Bank details added',
           type: 'success',
           autoDismiss: true,
-          duration: 4000
+          duration: 3000
         });
       },
       error: (err) => {
         this.bankLoading = false;
         this.alertService.showAlert({
-          message: err.error.message || 'Failed to save bank details',
+          message: err.error?.message || 'Failed to save bank details',
           type: 'error',
           autoDismiss: true,
           duration: 4000
@@ -213,4 +229,29 @@ export class ProfileComponent implements OnInit {
       }
     });
   }
+
+  deleteBankDetail(id: string) {
+    if (!confirm("Are you sure you want to delete this bank detail?")) return;
+
+    this.service.deleteBankDetails(id).subscribe({
+      next: () => {
+        this.loadBankDetails();
+        this.alertService.showAlert({
+          message: 'Bank detail deleted',
+          type: 'success',
+          autoDismiss: true,
+          duration: 3000
+        });
+      },
+      error: (err) => {
+        this.alertService.showAlert({
+          message: err.error?.message || 'Failed to delete bank detail',
+          type: 'error',
+          autoDismiss: true,
+          duration: 4000
+        });
+      }
+    });
+  }
+
 }
