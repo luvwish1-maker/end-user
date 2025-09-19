@@ -2,18 +2,22 @@
 
 <div class="container my-4">
 
+    <!-- Loader -->
     <div *ngIf="loading" class="text-center my-5">
         <div class="spinner-border text-primary" role="status">
             <span class="visually-hidden">Loading...</span>
         </div>
     </div>
 
+    <!-- Main Content -->
     <ng-container *ngIf="!loading">
+
+        <!-- Profile Section -->
         <h3 class="mb-3">My Profile</h3>
 
+        <!-- Profile Form (New or Edit) -->
         <div *ngIf="!profile?.CustomerProfile || editMode">
-            <h5 *ngIf="!profile?.CustomerProfile">Complete Your Profile</h5>
-            <h5 *ngIf="editMode">Edit Profile</h5>
+            <h5>{{ !profile?.CustomerProfile ? 'Complete Your Profile' : 'Edit Profile' }}</h5>
 
             <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" class="row g-3">
                 <div class="col-md-6">
@@ -50,13 +54,13 @@
                 </div>
                 <div class="col-12">
                     <button class="btn btn-primary" type="submit" [disabled]="loading">Save</button>
-                    <button class="btn btn-secondary ms-2" type="button" (click)="editMode = false"
-                        *ngIf="profile?.CustomerProfile">Cancel</button>
+                    <button *ngIf="profile?.CustomerProfile" class="btn btn-secondary ms-2" type="button"
+                        (click)="editMode = false">Cancel</button>
                 </div>
             </form>
         </div>
 
-        <!-- Profile Completed (View Mode) -->
+        <!-- Profile View Mode -->
         <div *ngIf="profile?.CustomerProfile && !editMode" class="card p-3">
             <div class="d-flex align-items-center">
                 <img *ngIf="profile.CustomerProfile.profilePicture" [src]="profile.CustomerProfile.profilePicture"
@@ -68,7 +72,8 @@
                 </div>
             </div>
             <hr>
-            <p><strong>Address:</strong> {{ profile.CustomerProfile.address }},
+            <p><strong>Address:</strong>
+                {{ profile.CustomerProfile.address }},
                 {{ profile.CustomerProfile.city }},
                 {{ profile.CustomerProfile.state }},
                 {{ profile.CustomerProfile.postalCode }},
@@ -77,26 +82,29 @@
             <button class="btn btn-outline-primary" (click)="enableEdit()">Edit Profile</button>
         </div>
 
-        <div class="card mt-4 p-3" *ngIf="bankDetails?.length">
-            <h5>Saved Bank Details</h5>
-            <div *ngFor="let bank of bankDetails" class="border rounded p-2 mb-2">
-                <p><strong>Account Number:</strong> {{ bank.accountNumber }}</p>
-                <p><strong>Account Holder:</strong> {{ bank.accountHolderName }}</p>
-                <p><strong>IFSC Code:</strong> {{ bank.ifscCode }}</p>
-                <button class="btn btn-sm btn-outline-primary me-2"
-                    (click)="openBankDetailsModal(bankDetailsModal, bank)">Edit</button>
-                <button class="btn btn-sm btn-outline-danger" (click)="deleteBankDetail(bank.id)">Delete</button>
+        <!-- Bank Details -->
+        <div *ngIf="!editMode">
+            <div class="card mt-4 p-3" *ngIf="bankDetails?.length; else noBankDetails">
+                <h5>Saved Bank Details</h5>
+                <div *ngFor="let bank of bankDetails" class="border rounded p-2 mb-2">
+                    <p><strong>Account Number:</strong> {{ bank.accountNumber }}</p>
+                    <p><strong>Account Holder:</strong> {{ bank.accountHolderName }}</p>
+                    <p><strong>IFSC Code:</strong> {{ bank.ifscCode }}</p>
+                    <button class="btn btn-sm btn-outline-primary me-2"
+                        (click)="openBankDetailsModal(bankDetailsModal, bank)">Edit</button>
+                    <button class="btn btn-sm btn-outline-danger" (click)="deleteBankDetail(bank.id)">Delete</button>
+                </div>
             </div>
         </div>
+        <ng-template #noBankDetails>
+            <div class="alert alert-info mt-3">No bank details saved yet.</div>
+        </ng-template>
 
-        <!-- Change Password Modal Trigger -->
+        <!-- Actions -->
         <div class="mt-4" *ngIf="!editMode">
-            <button class="btn btn-warning" (click)="openChangePasswordModal(changePasswordModal)">
+            <button class="btn btn-warning me-2" (click)="openChangePasswordModal(changePasswordModal)">
                 Change Password
             </button>
-        </div>
-
-        <div class="mt-3">
             <button class="btn btn-outline-success" (click)="openBankDetailsModal(bankDetailsModal)">
                 Add Bank Details
             </button>
@@ -104,13 +112,12 @@
     </ng-container>
 </div>
 
-<!-- Change Password Modal -->
+<!-- Modals -->
 <ng-template #changePasswordModal let-modal>
     <div class="modal-header">
         <h5 class="modal-title">Change Password</h5>
-        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+        <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
     </div>
-
     <div class="modal-body">
         <form [formGroup]="passwordForm" (ngSubmit)="changePassword(modal)">
             <div class="mb-2">
@@ -133,15 +140,11 @@
     </div>
 </ng-template>
 
-<!-- Bank Details Modal -->
 <ng-template #bankDetailsModal let-modal>
     <div class="modal-header">
-        <h5 class="modal-title">
-            {{ editingBankId ? 'Edit Bank Details' : 'Add Bank Details' }}
-        </h5>
-        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+        <h5 class="modal-title">{{ editingBankId ? 'Edit Bank Details' : 'Add Bank Details' }}</h5>
+        <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
     </div>
-
     <div class="modal-body">
         <form [formGroup]="bankForm" (ngSubmit)="saveBankDetails(modal)">
             <div class="mb-2">
