@@ -9,6 +9,7 @@ export class ProductsService {
 
   private BaseUrl = `${environment.apiUrl}/products`
   private CartUrl = `${environment.apiUrl}/cart`
+  private WishUrl = `${environment.apiUrl}/wishlist`
 
   constructor(
     private http: HttpClient
@@ -30,11 +31,23 @@ export class ProductsService {
     return this.http.get(`${this.CartUrl}`)
   }
 
-  removeCartItem(id: string, itm:any) {    
+  removeCartItem(id: string, itm: any) {
     return this.http.patch(`${this.CartUrl}/remove-from-cart/${id}`, itm)
   }
 
   updateCartItem(id: string, itm: any) {
     return this.http.patch(`${this.CartUrl}/add-to-cart/${id}`, itm)
+  }
+
+  addToWishList(itm: any) {
+    return this.http.post(`${this.WishUrl}`, itm)
+  }
+
+  getWishList() {
+    return this.http.get(`${this.WishUrl}`)
+  }
+
+  removeFromWishList(id: string) {
+    return this.http.delete(`${this.WishUrl}/?id=${id}`)
   }
 }

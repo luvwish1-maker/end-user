@@ -178,4 +178,52 @@ export class ProductsComponent implements OnInit {
 
   }
 
+  toggleWishlist(product: any) {
+    if (!this.authService.isLoggedIn()) {
+      this.alertService.showAlert({
+        message: 'Please log in to manage wishlist',
+        type: 'warning',
+        autoDismiss: true,
+        duration: 4000
+      });
+
+      const modalRef = this.modalService.open(LoginComponent, { centered: true, size: 'md' });
+      modalRef.componentInstance.isModal = true;
+      return;
+    }    
+
+    if (product.isWishlisted) {
+      this.service.removeFromWishList(product.id).subscribe({
+        next: () => {
+          product.isWishlisted = false;
+          this.alertService.showAlert({
+            message: 'Removed from wishlist',
+            type: 'info',
+            autoDismiss: true,
+            duration: 3000
+          });
+        },
+        error: (err) => {
+          console.error(err);
+        }
+      });
+      const itm = { productId: product.id };
+      this.service.addToWishList(itm).subscribe({
+        next: () => {
+          product.isWishlisted = true;
+          this.alertService.showAlert({
+            message: 'Added to wishlist',
+            type: 'success',
+            autoDismiss: true,
+            duration: 3000
+          });
+        },
+        error: (err) => {
+          console.error(err);
+        }
+      });
+    }
+  }
+
+
 }

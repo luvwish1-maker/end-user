@@ -372,6 +372,32 @@
     }
 }
 
+.product-card {
+    position: relative;
+}
+
+.product-card .wishlist {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 22px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    z-index: 2;
+}
+
+.product-card .wishlist:hover {
+    transform: scale(1.2);
+}
+
+.product-card .wishlist.bi-heart {
+    color: #555;
+}
+
+.product-card .wishlist.bi-heart-fill {
+    color: #EB147D;
+}
+
 /* ---------------- Responsive ---------------- */
 @media (max-width: 992px) {
     .featured-item .content {

@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 export class ProfileService {
 
   private BaseUrl = `${environment.apiUrl}/auth`
+  private BankUrl = `${environment.apiUrl}/bank-details`
 
   constructor(
     private http: HttpClient
@@ -40,5 +41,21 @@ export class ProfileService {
       }
     });
     return formData;
+  }
+
+  addBankDetails(itm: any) {
+    return this.http.post(`${this.BankUrl}`, itm)
+  }
+
+  getBankDetails() {
+    return this.http.get(`${this.BankUrl}`)
+  }
+
+  updateBankDetails(itm: any) {
+    return this.http.patch(`${this.BankUrl}/`, itm)
+  }
+
+  deleteBankDetails(id: string) {
+    return this.http.delete(`${this.BankUrl}/${id}`)
   }
 }

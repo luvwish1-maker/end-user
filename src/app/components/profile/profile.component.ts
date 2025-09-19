@@ -20,6 +20,9 @@ export class ProfileComponent implements OnInit {
   editMode = false;
   loading = false;
   passwordLoading = false;
+  bankForm!: FormGroup;
+  bankLoading = false;
+  bankDetails: any = null;
 
   constructor(
     private service: ProfileService,
@@ -32,6 +35,8 @@ export class ProfileComponent implements OnInit {
     this.loadProfile();
     this.profileFormInit();
     this.passwordFormInit();
+    this.bankFormInit();
+    this.loadBankDetails();
   }
 
   loadProfile() {
@@ -52,6 +57,14 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  loadBankDetails() {
+    this.service.getBankDetails().subscribe({
+      next: (res: any) => {
+        this.bankDetails = res;
+      }
+    });
+  }
+
   profileFormInit() {
     this.profileForm = this.fb.group({
       name: ['', Validators.required],
@@ -62,6 +75,14 @@ export class ProfileComponent implements OnInit {
       postalCode: ['', Validators.required],
       country: ['', Validators.required],
       profilePicture: ['']
+    });
+  }
+
+  bankFormInit() {
+    this.bankForm = this.fb.group({
+      accountNumber: ['', Validators.required],
+      accountHolderName: ['', Validators.required],
+      ifscCode: ['', Validators.required]
     });
   }
 
@@ -117,7 +138,18 @@ export class ProfileComponent implements OnInit {
   }
 
   openChangePasswordModal(content: TemplateRef<any>) {
+    const buttonElement = document.activeElement as HTMLElement;
+    buttonElement.blur();
+
     this.passwordForm.reset();
+    this.modalService.open(content, { centered: true });
+  }
+
+  openBankDetailsModal(content: TemplateRef<any>) {
+    const buttonElement = document.activeElement as HTMLElement;
+    buttonElement.blur();
+
+    this.bankForm.reset();
     this.modalService.open(content, { centered: true });
   }
 
@@ -147,6 +179,33 @@ export class ProfileComponent implements OnInit {
         this.passwordLoading = false;
         this.alertService.showAlert({
           message: err.error.message,
+          type: 'error',
+          autoDismiss: true,
+          duration: 4000
+        });
+      }
+    });
+  }
+
+  saveBankDetails(modalRef: any) {
+    if (this.bankForm.invalid) return;
+
+    this.bankLoading = true;
+    this.service.addBankDetails(this.bankForm.value).subscribe({
+      next: () => {
+        this.bankLoading = false;
+        modalRef.close();
+        this.alertService.showAlert({
+          message: 'Bank details added successfully',
+          type: 'success',
+          autoDismiss: true,
+          duration: 4000
+        });
+      },
+      error: (err) => {
+        this.bankLoading = false;
+        this.alertService.showAlert({
+          message: err.error.message || 'Failed to save bank details',
           type: 'error',
           autoDismiss: true,
           duration: 4000

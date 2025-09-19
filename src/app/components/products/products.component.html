@@ -54,19 +54,21 @@
     <!-- Products Grid -->
     <section class="products" *ngIf="!isLoading">
         <div class="product-card" (click)="gotoDetail(product)" *ngFor="let product of allProducts">
+            <i class="wishlist bi" [ngClass]="product.isWishlisted ? 'bi-heart-fill text-danger' : 'bi-heart'"
+                (click)="toggleWishlist(product); $event.stopPropagation()"></i>
+
             <a>
                 <img [src]="product.img" [alt]="product.name" (error)="onImgError($event)">
             </a>
             <h5>{{ product.name }}</h5>
+
             <div class="product-info">
                 <div class="price-stock">
                     <span class="price">₹{{ product.discountedPrice }}</span>
                     <span class="original-price">₹{{ product.actualPrice }}</span>
                 </div>
-
                 <div class="right-side">
                     <span class="stock">{{ product.stockCount }} in stock</span>
-
                     <div class="quantity" (click)="$event.stopPropagation()">
                         <button (click)="decreaseQty(product)">-</button>
                         <input type="number" [(ngModel)]="product.quantity" min="1" [max]="product.stock">
@@ -74,10 +76,12 @@
                     </div>
                 </div>
             </div>
+
             <div class="product-buttons" (click)="$event.stopPropagation()">
                 <button class="buy"><i class="bi bi-hand-index"></i> Buy Now</button>
-                <button class="cart" (click)="addToCart(product.id, product.quantity)"><i class="bi bi-cart3"></i> Add
-                    to Cart</button>
+                <button class="cart" (click)="addToCart(product.id, product.quantity)">
+                    <i class="bi bi-cart3"></i> Add to Cart
+                </button>
             </div>
         </div>
 
