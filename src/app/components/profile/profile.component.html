@@ -13,7 +13,19 @@
     <ng-container *ngIf="!loading">
 
         <!-- Profile Section -->
-        <h3 class="mb-3">My Profile</h3>
+        <!-- Profile Section -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3 class="mb-0">My Profile</h3>
+
+            <div *ngIf="!editMode">
+                <button class="btn btn-warning me-2" (click)="openChangePasswordModal(changePasswordModal)">
+                    Change Password
+                </button>
+                <button class="btn btn-outline-success" (click)="openBankDetailsModal(bankDetailsModal)">
+                    Add Bank Details
+                </button>
+            </div>
+        </div>
 
         <!-- Profile Form (New or Edit) -->
         <div *ngIf="!profile?.CustomerProfile || editMode">
@@ -72,12 +84,11 @@
                 </div>
             </div>
             <hr>
-            <p><strong>Address:</strong>
-                {{ profile.CustomerProfile.address }},
-                {{ profile.CustomerProfile.city }},
-                {{ profile.CustomerProfile.state }},
-                {{ profile.CustomerProfile.postalCode }},
-                {{ profile.CustomerProfile.country }}
+            <p *ngIf="getFullAddress(profile.CustomerProfile)">
+                <strong>Address:</strong> {{ getFullAddress(profile.CustomerProfile) }}
+            </p>
+            <p *ngIf="!getFullAddress(profile.CustomerProfile)">
+                <strong>Address:</strong> Not provided
             </p>
             <button class="btn btn-outline-primary" (click)="enableEdit()">Edit Profile</button>
         </div>
@@ -100,15 +111,6 @@
             <div class="alert alert-info mt-3">No bank details saved yet.</div>
         </ng-template>
 
-        <!-- Actions -->
-        <div class="mt-4" *ngIf="!editMode">
-            <button class="btn btn-warning me-2" (click)="openChangePasswordModal(changePasswordModal)">
-                Change Password
-            </button>
-            <button class="btn btn-outline-success" (click)="openBankDetailsModal(bankDetailsModal)">
-                Add Bank Details
-            </button>
-        </div>
     </ng-container>
 </div>
 

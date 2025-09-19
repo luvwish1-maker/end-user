@@ -70,6 +70,7 @@ export class ProfileComponent implements OnInit {
     this.service.getProfile().subscribe({
       next: (res: any) => {
         this.profile = res.data;
+        this.getFullAddress(res.data)
         if (this.profile?.CustomerProfile) {
           this.profileForm.patchValue(this.profile.CustomerProfile);
         }
@@ -77,6 +78,20 @@ export class ProfileComponent implements OnInit {
       },
       error: () => this.loading = false
     });
+  }
+
+  getFullAddress(profile: any): string {
+    if (!profile) return '';
+
+    const parts = [
+      profile.address,
+      profile.city,
+      profile.state,
+      profile.postalCode,
+      profile.country
+    ].filter(p => !!p && p.trim() !== '');
+
+    return parts.join(', ');
   }
 
   enableEdit() {
