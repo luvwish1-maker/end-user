@@ -190,12 +190,12 @@ export class ProductsComponent implements OnInit {
       const modalRef = this.modalService.open(LoginComponent, { centered: true, size: 'md' });
       modalRef.componentInstance.isModal = true;
       return;
-    }    
+    }
 
-    if (product.isWishlisted) {
+    if (product.is_wishlisted) {      
       this.service.removeFromWishList(product.id).subscribe({
         next: () => {
-          product.isWishlisted = false;
+          product.is_wishlisted = false;
           this.alertService.showAlert({
             message: 'Removed from wishlist',
             type: 'info',
@@ -207,23 +207,24 @@ export class ProductsComponent implements OnInit {
           console.error(err);
         }
       });
-      const itm = { productId: product.id };
-      this.service.addToWishList(itm).subscribe({
-        next: () => {
-          product.isWishlisted = true;
-          this.alertService.showAlert({
-            message: 'Added to wishlist',
-            type: 'success',
-            autoDismiss: true,
-            duration: 3000
-          });
-        },
-        error: (err) => {
-          console.error(err);
-        }
-      });
+      return ;
     }
-  }
 
+    const itm = { productId: product.id };
+    this.service.addToWishList(itm).subscribe({
+      next: () => {
+        product.is_wishlisted = true;
+        this.alertService.showAlert({
+          message: 'Added to wishlist',
+          type: 'success',
+          autoDismiss: true,
+          duration: 3000
+        });
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+  }
 
 }

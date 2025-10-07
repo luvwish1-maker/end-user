@@ -6,6 +6,7 @@ import { ProductDetailsComponent } from './components/product-details/product-de
 import { OrderListSummaryComponent } from './components/order-list-summary/order-list-summary.component';
 import { OrderPriceSummaryComponent } from './components/order-price-summary/order-price-summary.component';
 import { CartComponent } from './components/cart/cart.component';
+import { WishlistComponent } from './components/wishlist/wishlist.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'products', pathMatch: 'full' },
@@ -15,5 +16,6 @@ export const routes: Routes = [
     { path: 'profile', component: ProfileComponent },
     { path: 'orderlistsummary', component: OrderListSummaryComponent },
     { path: 'orderpricesummary', component: OrderPriceSummaryComponent },
-    { path: 'cart', component: CartComponent }
+    { path: 'cart', component: CartComponent },
+    { path: 'wishlist', component: WishlistComponent }
 ];

@@ -32,11 +32,11 @@ export class ProductsService {
   }
 
   removeCartItem(id: string, itm: any) {
-    return this.http.patch(`${this.CartUrl}/remove-from-cart/${id}`, itm)
+    return this.http.delete(`${this.CartUrl}/delete-cart/${id}`)
   }
 
-  updateCartItem(id: string, itm: any) {
-    return this.http.patch(`${this.CartUrl}/add-to-cart/${id}`, itm)
+  updateCartItem(itm: any) {
+    return this.http.patch(`${this.CartUrl}/update-cart`, itm)
   }
 
   addToWishList(itm: any) {

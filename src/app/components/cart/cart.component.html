@@ -8,7 +8,14 @@
     </ng-container>
 
     <ng-template #productList>
-        <section class="products">
+        <div *ngIf="!isLoading && allProducts.length === 0" class="empty-cart text-center my-5">
+            <img src="/assets/images/empty-cart.png" alt="Empty Cart" class="empty-cart-img mb-3">
+            <h4>Your cart is empty</h4>
+            <p class="text-muted">Add some products to your cart to see them here.</p>
+            <button class="btn btn-primary mt-3" routerLink="/products">Browse Products</button>
+        </div>
+
+        <section class="products" *ngIf="allProducts.length > 0">
             <div class="product-card" (click)="gotoDetail(product)" *ngFor="let product of allProducts">
                 <a>
                     <img [src]="product.img" [alt]="product.name" (error)="onImgError($event)">

@@ -1,1 +1,54 @@
-<p>wishlist works!</p>
+<app-header></app-header>
+
+<div class="container-fluid">
+    <ng-container *ngIf="isLoading; else productList">
+        <div class="container-loader">
+            <div class="spinner"></div>
+        </div>
+    </ng-container>
+
+    <ng-template #productList>
+        <div *ngIf="!isLoading && allProducts.length === 0" class="empty-cart text-center my-5">
+            <img src="/assets/images/empty-cart.png" alt="Empty Cart" class="empty-cart-img mb-3">
+            <h4>Your wishlist is empty</h4>
+            <p class="text-muted">Add some products to your wishlist to see them here.</p>
+            <button class="btn btn-primary mt-3" routerLink="/products">Browse Products</button>
+        </div>
+
+        <section class="products" *ngIf="allProducts.length > 0">
+            <div class="product-card" (click)="gotoDetail(product)" *ngFor="let product of allProducts">
+                <a>
+                    <img [src]="product.img" [alt]="product.name" (error)="onImgError($event)">
+                </a>
+                <h5>{{ product.name }}</h5>
+                <div class="product-info">
+                    <div class="price-stock">
+                        <span class="price">₹{{ product.discountedPrice }}</span>
+                        <span class="original-price">₹{{ product.actualPrice }}</span>
+                    </div>
+
+                    <div class="right-side">
+                        <span class="stock">{{ product.stockCount }} in stock</span>
+
+                        <div class="quantity" (click)="$event.stopPropagation()">
+                            <button (click)="decreaseQty(product)">-</button>
+                            <input type="number" [(ngModel)]="product.quantity" min="1" [max]="product.stock">
+                            <button (click)="increaseQty(product)">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-buttons" (click)="$event.stopPropagation()">
+                    <button class="buy"><i class="bi bi-hand-index"></i> Buy Now</button>
+                    <button class="btn btn-danger btn-sm" (click)="removeWishlist(product)"
+                        [disabled]="loadingRemove[product.productId]">
+                        <span *ngIf="loadingRemove[product.productId]"
+                            class="spinner-border spinner-border-sm me-2"></span>
+                        Remove
+                    </button>
+                </div>
+            </div>
+        </section>
+    </ng-template>
+</div>
+
+<app-footer></app-footer>

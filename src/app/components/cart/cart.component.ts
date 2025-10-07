@@ -3,13 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../products/service/products.service';
 import { HeaderComponent } from "../../shared/header/header.component";
 import { FooterComponent } from "../../shared/footer/footer.component";
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AlertService } from '../../shared/alert/service/alert.service';
 
 @Component({
   selector: 'app-cart',
-  imports: [CommonModule, HeaderComponent, FooterComponent, FormsModule],
+  imports: [CommonModule, HeaderComponent, FooterComponent, FormsModule, RouterModule],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css'
 })
@@ -102,7 +102,7 @@ export class CartComponent implements OnInit {
 
     this.loadingUpdate[product.productId] = true;
 
-    this.service.updateCartItem(cartItem.id, { quantity: product.quantity }).subscribe({
+    this.service.updateCartItem({ productId:cartItem.productId, quantity: product.quantity }).subscribe({
       next: () => {
         this.alertService.showAlert({
           message: 'Cart updated successfully',

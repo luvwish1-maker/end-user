@@ -54,7 +54,6 @@ export class ProductDetailsComponent implements OnInit {
     this.service.getProductByID(id).subscribe({
       next: (res: any) => {
         this.product = res.data;
-        console.log(res);
       },
       error: (err) => {
         console.error(err);

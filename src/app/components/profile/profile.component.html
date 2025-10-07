@@ -2,18 +2,14 @@
 
 <div class="container my-4">
 
-    <!-- Loader -->
     <div *ngIf="loading" class="text-center my-5">
         <div class="spinner-border text-primary" role="status">
             <span class="visually-hidden">Loading...</span>
         </div>
     </div>
 
-    <!-- Main Content -->
     <ng-container *ngIf="!loading">
 
-        <!-- Profile Section -->
-        <!-- Profile Section -->
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h3 class="mb-0">My Profile</h3>
 
@@ -27,7 +23,6 @@
             </div>
         </div>
 
-        <!-- Profile Form (New or Edit) -->
         <div *ngIf="!profile?.CustomerProfile || editMode">
             <h5>{{ !profile?.CustomerProfile ? 'Complete Your Profile' : 'Edit Profile' }}</h5>
 
@@ -72,7 +67,6 @@
             </form>
         </div>
 
-        <!-- Profile View Mode -->
         <div *ngIf="profile?.CustomerProfile && !editMode" class="card p-3">
             <div class="d-flex align-items-center">
                 <img *ngIf="profile.CustomerProfile.profilePicture" [src]="profile.CustomerProfile.profilePicture"
@@ -93,7 +87,6 @@
             <button class="btn btn-outline-primary" (click)="enableEdit()">Edit Profile</button>
         </div>
 
-        <!-- Bank Details -->
         <div *ngIf="!editMode">
             <div class="card mt-4 p-3" *ngIf="bankDetails?.length; else noBankDetails">
                 <h5>Saved Bank Details</h5>
@@ -114,7 +107,6 @@
     </ng-container>
 </div>
 
-<!-- Modals -->
 <ng-template #changePasswordModal let-modal>
     <div class="modal-header">
         <h5 class="modal-title">Change Password</h5>

@@ -10,7 +10,7 @@
         </div>
 
         <div class="carousel-indicators">
-            <button *ngFor="let img of details.images; let i = index" type="button" data-bs-target="#productCarousel"
+            <button *ngFor="let img of product.images; let i = index" type="button" data-bs-target="#productCarousel"
                 [attr.data-bs-slide-to]="i" [class.active]="i === 0" [attr.aria-current]="i === 0 ? 'true' : null"
                 [attr.aria-label]="'Slide ' + (i + 1)">
             </button>
