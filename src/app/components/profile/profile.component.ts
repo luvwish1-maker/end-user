@@ -49,7 +49,7 @@ export class ProfileComponent implements OnInit {
   private initForms() {
     this.profileForm = this.fb.group({
       name: ['', Validators.required],
-      profilePicture: ['']
+      profilePicture: ['', [Validators.required, Validators.pattern('https?://.+')]]
     });
 
     this.bankForm = this.fb.group({
@@ -110,13 +110,6 @@ export class ProfileComponent implements OnInit {
         this.showAlert(err.error?.message || 'Profile update failed', 'error');
       }
     });
-  }
-
-  onFileSelected(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input.files?.length) {
-      this.profileForm.patchValue({ profilePicture: input.files[0] });
-    }
   }
 
   loadBankDetails() {

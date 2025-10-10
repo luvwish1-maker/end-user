@@ -30,14 +30,26 @@
         <div *ngIf="editMode; else profileDisplay">
             <h5>Edit Profile</h5>
             <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" class="row g-3">
+
                 <div class="col-md-6">
                     <label class="form-label">Full Name</label>
                     <input type="text" formControlName="name" class="form-control" />
+                    <div class="text-danger mt-1"
+                        *ngIf="profileForm.get('name')?.touched && profileForm.get('name')?.invalid">
+                        Name is required
+                    </div>
                 </div>
+
                 <div class="col-md-6">
-                    <label class="form-label">Profile Picture</label>
-                    <input type="file" class="form-control" (change)="onFileSelected($event)" />
+                    <label class="form-label">Profile Picture URL</label>
+                    <input type="url" formControlName="profilePicture" class="form-control"
+                        placeholder="Enter image URL" />
+                    <div class="text-danger mt-1"
+                        *ngIf="profileForm.get('profilePicture')?.touched && profileForm.get('profilePicture')?.invalid">
+                        Valid URL is required
+                    </div>
                 </div>
+
                 <div class="col-12">
                     <button class="btn btn-primary" type="submit" [disabled]="loading">Save</button>
                     <button class="btn btn-secondary ms-2" type="button" (click)="editMode = false">Cancel</button>
@@ -48,8 +60,8 @@
         <!-- Profile Display -->
         <ng-template #profileDisplay>
             <div class="card p-3 d-flex flex-column align-items-center text-center">
-                <img *ngIf="profile?.profilePicture" [src]="profile.CustomerProfile.profilePicture" alt="Profile Picture"
-                    class="rounded-circle mb-3" width="100" height="100">
+                <img *ngIf="profile?.profilePicture" [src]="profile.CustomerProfile.profilePicture"
+                    alt="Profile Picture" class="rounded-circle mb-3" width="100" height="100">
                 <h5>{{ profile?.CustomerProfile.name }}</h5>
                 <p class="text-muted">{{ profile?.email }}</p>
                 <button class="btn btn-outline-primary mt-2" (click)="enableEdit()">Edit Profile</button>
@@ -121,14 +133,28 @@
             <div class="mb-2">
                 <label class="form-label">Current Password</label>
                 <input type="password" formControlName="currentPassword" class="form-control" />
+                <div class="text-danger mt-1"
+                    *ngIf="passwordForm.get('currentPassword')?.touched && passwordForm.get('currentPassword')?.invalid">
+                    Current password is required
+                </div>
             </div>
+
             <div class="mb-2">
                 <label class="form-label">New Password</label>
                 <input type="password" formControlName="newPassword" class="form-control" />
+                <div class="text-danger mt-1"
+                    *ngIf="passwordForm.get('newPassword')?.touched && passwordForm.get('newPassword')?.invalid">
+                    New password must be at least 6 characters
+                </div>
             </div>
+
             <div class="mb-2">
                 <label class="form-label">Confirm New Password</label>
                 <input type="password" formControlName="confirmPassword" class="form-control" />
+                <div class="text-danger mt-1"
+                    *ngIf="passwordForm.get('confirmPassword')?.touched && passwordForm.get('confirmPassword')?.invalid">
+                    Please confirm your new password
+                </div>
             </div>
             <button class="btn btn-success" type="submit" [disabled]="passwordLoading">
                 <span *ngIf="passwordLoading" class="spinner-border spinner-border-sm me-2"></span>
@@ -149,14 +175,28 @@
             <div class="mb-2">
                 <label class="form-label">Account Number</label>
                 <input type="text" formControlName="accountNumber" class="form-control" />
+                <div class="text-danger mt-1"
+                    *ngIf="bankForm.get('accountNumber')?.touched && bankForm.get('accountNumber')?.invalid">
+                    Account number is required
+                </div>
             </div>
+
             <div class="mb-2">
                 <label class="form-label">Account Holder Name</label>
                 <input type="text" formControlName="accountHolderName" class="form-control" />
+                <div class="text-danger mt-1"
+                    *ngIf="bankForm.get('accountHolderName')?.touched && bankForm.get('accountHolderName')?.invalid">
+                    Account holder name is required
+                </div>
             </div>
+
             <div class="mb-2">
                 <label class="form-label">IFSC Code</label>
                 <input type="text" formControlName="ifscCode" class="form-control" />
+                <div class="text-danger mt-1"
+                    *ngIf="bankForm.get('ifscCode')?.touched && bankForm.get('ifscCode')?.invalid">
+                    IFSC code is required
+                </div>
             </div>
             <button class="btn btn-success" type="submit" [disabled]="bankLoading">
                 <span *ngIf="bankLoading" class="spinner-border spinner-border-sm me-2"></span>
@@ -175,20 +215,68 @@
     <div class="modal-body">
         <form [formGroup]="addressForm" (ngSubmit)="saveAddress(modal)">
             <div class="row g-2">
-                <div class="col-md-6"><label class="form-label">Name</label><input formControlName="name"
-                        class="form-control"></div>
-                <div class="col-md-6"><label class="form-label">Phone</label><input formControlName="phone"
-                        class="form-control"></div>
-                <div class="col-12"><label class="form-label">Address</label><input formControlName="address"
-                        class="form-control"></div>
-                <div class="col-md-6"><label class="form-label">City</label><input formControlName="city"
-                        class="form-control"></div>
-                <div class="col-md-6"><label class="form-label">State</label><input formControlName="state"
-                        class="form-control"></div>
-                <div class="col-md-6"><label class="form-label">Postal Code</label><input formControlName="postalCode"
-                        class="form-control"></div>
-                <div class="col-md-6"><label class="form-label">Country</label><input formControlName="country"
-                        class="form-control"></div>
+                <div class="col-md-6">
+                    <label class="form-label">Name</label>
+                    <input formControlName="name" class="form-control" />
+                    <div class="text-danger mt-1"
+                        *ngIf="addressForm.get('name')?.touched && addressForm.get('name')?.invalid">
+                        Name is required
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Phone</label>
+                    <input formControlName="phone" class="form-control" />
+                    <div class="text-danger mt-1"
+                        *ngIf="addressForm.get('phone')?.touched && addressForm.get('phone')?.invalid">
+                        Phone is required
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label">Address</label>
+                    <input formControlName="address" class="form-control" />
+                    <div class="text-danger mt-1"
+                        *ngIf="addressForm.get('address')?.touched && addressForm.get('address')?.invalid">
+                        Address is required
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">City</label>
+                    <input formControlName="city" class="form-control" />
+                    <div class="text-danger mt-1"
+                        *ngIf="addressForm.get('city')?.touched && addressForm.get('city')?.invalid">
+                        City is required
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">State</label>
+                    <input formControlName="state" class="form-control" />
+                    <div class="text-danger mt-1"
+                        *ngIf="addressForm.get('state')?.touched && addressForm.get('state')?.invalid">
+                        State is required
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Postal Code</label>
+                    <input formControlName="postalCode" class="form-control" />
+                    <div class="text-danger mt-1"
+                        *ngIf="addressForm.get('postalCode')?.touched && addressForm.get('postalCode')?.invalid">
+                        Postal code is required
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Country</label>
+                    <input formControlName="country" class="form-control" />
+                    <div class="text-danger mt-1"
+                        *ngIf="addressForm.get('country')?.touched && addressForm.get('country')?.invalid">
+                        Country is required
+                    </div>
+                </div>
                 <div class="col-12"><label class="form-label">Landmark</label><input formControlName="landmark"
                         class="form-control"></div>
             </div>
