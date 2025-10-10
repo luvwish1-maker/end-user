@@ -185,6 +185,17 @@
     user-select: none;
 }
 
+.btn-success {
+  background: linear-gradient(90deg, #00C853, #00e864);
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn-success:hover {
+  opacity: 0.9;
+}
 
 @media (max-width: 576px) {
     .product-card img {

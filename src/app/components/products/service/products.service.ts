@@ -10,6 +10,7 @@ export class ProductsService {
   private BaseUrl = `${environment.apiUrl}/products`
   private CartUrl = `${environment.apiUrl}/cart`
   private WishUrl = `${environment.apiUrl}/wishlist`
+  private OrderUrl = `${environment.apiUrl}/payments/create-order`
 
   constructor(
     private http: HttpClient
@@ -49,5 +50,9 @@ export class ProductsService {
 
   removeFromWishList(id: string) {
     return this.http.delete(`${this.WishUrl}/?id=${id}`)
+  }
+
+  createOrder(itm: any) {
+    return this.http.post(`${this.OrderUrl}`, itm)
   }
 }

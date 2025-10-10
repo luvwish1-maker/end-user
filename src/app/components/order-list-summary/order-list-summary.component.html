@@ -24,8 +24,8 @@
                     <!-- Price, original price, discount -->
                     <div class="price-row">
                         <div class="price-col">
-                            <span class="price">₹{{ order.price }}</span>
-                            <span class="original-price">₹{{ order.originalPrice }}</span>
+                            <span class="price">₹{{ order.discountedPrice }}</span>
+                            <span class="original-price">₹{{ order.actualPrice }}</span>
                             <span class="discount">{{ order.discount }}</span>
                         </div>
                     </div>

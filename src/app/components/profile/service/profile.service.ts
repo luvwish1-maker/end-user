@@ -9,6 +9,7 @@ export class ProfileService {
 
   private BaseUrl = `${environment.apiUrl}/auth`
   private BankUrl = `${environment.apiUrl}/bank-details`
+  private AddressUrl = `${environment.apiUrl}/addresses`
 
   constructor(
     private http: HttpClient
@@ -19,14 +20,13 @@ export class ProfileService {
   }
 
   createProfile(itm: any) {
-    const formData = this.buildFormData(itm);
-    return this.http.post(`${this.BaseUrl}/profile`, formData);
+    // const formData = this.buildFormData(itm);    
+    return this.http.post(`${this.BaseUrl}/profile`, itm);
   }
 
-
   updateProfile(itm: any) {
-    const formData = this.buildFormData(itm);
-    return this.http.patch(`${this.BaseUrl}/profile`, formData);
+    // const formData = this.buildFormData(itm);
+    return this.http.patch(`${this.BaseUrl}/profile`, itm);
   }
 
   updatePassword(itm: any) {
@@ -57,5 +57,9 @@ export class ProfileService {
 
   deleteBankDetails(id: string) {
     return this.http.delete(`${this.BankUrl}/${id}`)
+  }
+
+  getAddresses(){
+    return this.http.get(`${this.AddressUrl}`)
   }
 }

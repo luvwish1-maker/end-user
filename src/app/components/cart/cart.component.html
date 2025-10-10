@@ -38,7 +38,7 @@
                     </div>
                 </div>
                 <div class="product-buttons" (click)="$event.stopPropagation()">
-                    <button class="buy"><i class="bi bi-hand-index"></i> Buy Now</button>
+                    <!-- <button class="buy"><i class="bi bi-hand-index"></i> Buy Now</button> -->
                     <button class="btn btn-primary btn-sm" (click)="updateCart(product)"
                         [disabled]="loadingUpdate[product.productId]">
                         <span *ngIf="loadingUpdate[product.productId]"
@@ -54,6 +54,13 @@
                 </div>
             </div>
         </section>
+
+        <div class="text-center mt-4" *ngIf="allProducts.length > 0">
+            <button class="btn btn-success px-5 py-2" (click)="checkout()" [disabled]="isLoading">
+                <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
+                Proceed to Order
+            </button>
+        </div>
     </ng-template>
 </div>
 
