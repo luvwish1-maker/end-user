@@ -1,0 +1,7 @@
+.card img {
+    object-fit: cover;
+}
+
+button {
+    min-width: 100px;
+}

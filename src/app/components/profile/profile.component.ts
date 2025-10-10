@@ -18,10 +18,13 @@ export class ProfileComponent implements OnInit {
   profileForm!: FormGroup;
   passwordForm!: FormGroup;
   bankForm!: FormGroup;
+  addressForm!: FormGroup;
+  customerProfileId!: any;
 
   loading = false;
   passwordLoading = false;
   bankLoading = false;
+  addressLoading = false;
 
   editMode = false;
   bankDetails: any[] = [];
@@ -43,12 +46,6 @@ export class ProfileComponent implements OnInit {
   private initForms() {
     this.profileForm = this.fb.group({
       name: ['', Validators.required],
-      phone: ['', Validators.required],
-      address: ['', Validators.required],
-      city: ['', Validators.required],
-      state: ['', Validators.required],
-      postalCode: ['', Validators.required],
-      country: ['', Validators.required],
       profilePicture: ['']
     });
 
@@ -63,6 +60,19 @@ export class ProfileComponent implements OnInit {
       newPassword: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required]
     });
+
+    this.addressForm = this.fb.group({
+      customerProfileId: [''],
+      name: ['', Validators.required],
+      address: ['', Validators.required],
+      city: ['', Validators.required],
+      state: ['', Validators.required],
+      postalCode: ['', Validators.required],
+      country: ['', Validators.required],
+      landmark: [''],
+      phone: ['', Validators.required],
+      isDefault: [false]
+    });
   }
 
   loadProfile() {
@@ -70,28 +80,12 @@ export class ProfileComponent implements OnInit {
     this.service.getProfile().subscribe({
       next: (res: any) => {
         this.profile = res.data;
-        this.getFullAddress(res.data)
-        if (this.profile?.CustomerProfile) {
-          this.profileForm.patchValue(this.profile.CustomerProfile);
-        }
+        this.customerProfileId = res.data.id;
+        this.profileForm.patchValue(this.profile);
         this.loading = false;
       },
-      error: () => this.loading = false
+      error: () => (this.loading = false)
     });
-  }
-
-  getFullAddress(profile: any): string {
-    if (!profile) return '';
-
-    const parts = [
-      profile.address,
-      profile.city,
-      profile.state,
-      profile.postalCode,
-      profile.country
-    ].filter(p => !!p && p.trim() !== '');
-
-    return parts.join(', ');
   }
 
   enableEdit() {
@@ -101,10 +95,9 @@ export class ProfileComponent implements OnInit {
   saveProfile() {
     if (this.profileForm.invalid) return;
     this.loading = true;
-
     this.service.updateProfile(this.profileForm.value).subscribe({
       next: (res: any) => {
-        this.profile.CustomerProfile = res.data;
+        this.profile = res.data;
         this.editMode = false;
         this.loading = false;
         this.showAlert('Profile updated successfully', 'success');
@@ -125,7 +118,7 @@ export class ProfileComponent implements OnInit {
 
   loadBankDetails() {
     this.service.getBankDetails().subscribe({
-      next: (res: any) => this.bankDetails = res.data,
+      next: (res: any) => (this.bankDetails = res.data),
       error: (err) => console.error(err)
     });
   }
@@ -139,7 +132,6 @@ export class ProfileComponent implements OnInit {
   saveBankDetails(modalRef: any) {
     if (this.bankForm.invalid) return;
     this.bankLoading = true;
-
     const action$ = this.editingBankId
       ? this.service.updateBankDetails({ ...this.bankForm.value, id: this.editingBankId })
       : this.service.addBankDetails(this.bankForm.value);
@@ -159,8 +151,7 @@ export class ProfileComponent implements OnInit {
   }
 
   deleteBankDetail(id: string) {
-    if (!confirm("Are you sure you want to delete this bank detail?")) return;
-
+    if (!confirm('Are you sure you want to delete this bank detail?')) return;
     this.service.deleteBankDetails(id).subscribe({
       next: () => {
         this.loadBankDetails();
@@ -179,9 +170,8 @@ export class ProfileComponent implements OnInit {
 
   changePassword(modalRef: any) {
     if (this.passwordForm.invalid) return;
-    if (this.passwordForm.value.newPassword !== this.passwordForm.value.confirmPassword) {
+    if (this.passwordForm.value.newPassword !== this.passwordForm.value.confirmPassword)
       return this.showAlert('New passwords do not match!', 'error');
-    }
 
     this.passwordLoading = true;
     this.service.updatePassword({
@@ -196,6 +186,27 @@ export class ProfileComponent implements OnInit {
       error: (err) => {
         this.passwordLoading = false;
         this.showAlert(err.error?.message || 'Failed to change password', 'error');
+      }
+    });
+  }
+
+  openAddressModal(content: TemplateRef<any>) {
+    this.addressForm.reset();
+    this.modalService.open(content, { size: 'lg', centered: true });
+  }
+
+  saveAddress(modalRef: any) {
+    if (this.addressForm.invalid) return;
+    this.addressLoading = true;
+    this.service.addAddress(this.addressForm.value).subscribe({
+      next: () => {
+        this.addressLoading = false;
+        modalRef.close();
+        this.showAlert('Address saved successfully', 'success');
+      },
+      error: (err) => {
+        this.addressLoading = false;
+        this.showAlert(err.error?.message || 'Failed to save address', 'error');
       }
     });
   }

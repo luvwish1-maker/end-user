@@ -59,7 +59,19 @@ export class ProfileService {
     return this.http.delete(`${this.BankUrl}/${id}`)
   }
 
-  getAddresses(){
+  getAddresses() {
     return this.http.get(`${this.AddressUrl}`)
+  }
+
+  addAddress(itm: any) {
+    return this.http.post(`${this.AddressUrl}`, itm)
+  }
+
+  updateAddress(itm: any, id: any) {
+    return this.http.patch(`${this.AddressUrl}/${id}`, itm)
+  }
+
+  deleteAddress(id: any) {
+    return this.http.delete(`${this.AddressUrl}/${id}`)
   }
 }
