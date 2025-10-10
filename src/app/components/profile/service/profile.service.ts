@@ -67,9 +67,10 @@ export class ProfileService {
     return this.http.post(`${this.AddressUrl}`, itm)
   }
 
-  updateAddress(itm: any, id: any) {
-    return this.http.patch(`${this.AddressUrl}/${id}`, itm)
-  }
+updateAddress(itm: any, id: string) {
+  const { id: _omit, createdAt, updatedAt, ...cleaned } = itm;
+  return this.http.patch(`${this.AddressUrl}/${id}`, cleaned);
+}
 
   deleteAddress(id: any) {
     return this.http.delete(`${this.AddressUrl}/${id}`)

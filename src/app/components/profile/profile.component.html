@@ -75,6 +75,38 @@
             <div class="alert alert-info mt-3">No bank details saved yet.</div>
         </ng-template>
 
+        <!-- Address List -->
+        <div *ngIf="!editMode">
+            <div class="card mt-4 p-3" *ngIf="addresses?.length; else noAddresses">
+                <h5>Saved Addresses</h5>
+
+                <div *ngFor="let addr of addresses" class="border rounded p-3 mb-2">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <p><strong>{{ addr.name }}</strong></p>
+                            <p>{{ addr.address }}, {{ addr.city }}, {{ addr.state }} - {{ addr.postalCode }}</p>
+                            <p>{{ addr.country }}</p>
+                            <p><strong>Phone:</strong> {{ addr.phone }}</p>
+                            <p *ngIf="addr.landmark"><strong>Landmark:</strong> {{ addr.landmark }}</p>
+                            <span *ngIf="addr.isDefault" class="badge bg-success">Default</span>
+                        </div>
+                        <div class="d-flex flex-column align-items-end">
+                            <button class="btn btn-sm btn-outline-primary mb-1"
+                                (click)="openAddressModal(addressModal, addr)">Edit</button>
+                            <button class="btn btn-sm btn-outline-danger mb-1"
+                                (click)="deleteAddress(addr.id)">Delete</button>
+                            <button *ngIf="!addr.isDefault" class="btn btn-sm btn-outline-success"
+                                (click)="setAsDefault(addr.id)">Set as Default</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <ng-template #noAddresses>
+            <div class="alert alert-info mt-3">No addresses saved yet.</div>
+        </ng-template>
+
     </ng-container>
 </div>
 

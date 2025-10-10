@@ -21,6 +21,7 @@ export class ProfileComponent implements OnInit {
   addressForm!: FormGroup;
   addresses: any[] = []
   customerProfileId!: any;
+  editingAddressId: string | null = null;
 
   loading = false;
   passwordLoading = false;
@@ -199,28 +200,76 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  openAddressModal(content: TemplateRef<any>) {
-    this.addressForm.reset();
+  openAddressModal(content: TemplateRef<any>, address?: any) {
+    this.addressForm.reset({
+      isDefault: false
+    });
+    this.editingAddressId = address ? address.id : null;
+
+    if (address) {
+      this.addressForm.patchValue(address);
+    }
+
     this.modalService.open(content, { size: 'lg', centered: true });
   }
 
   saveAddress(modalRef: any) {
     if (this.addressForm.invalid) return;
     this.addressLoading = true;
+
     const payload = {
       ...this.addressForm.value,
       customerProfileId: String(this.customerProfileId),
       isDefault: this.addressForm.value.isDefault ?? false
     };
-    this.service.addAddress(payload).subscribe({
+
+    const request$ = this.editingAddressId
+      ? this.service.updateAddress(payload, this.editingAddressId)
+      : this.service.addAddress(payload);
+
+    request$.subscribe({
       next: () => {
         this.addressLoading = false;
         modalRef.close();
-        this.showAlert('Address saved successfully', 'success');
+        this.loadAddresses();
+        this.showAlert(
+          this.editingAddressId ? 'Address updated successfully' : 'Address added successfully',
+          'success'
+        );
       },
       error: (err) => {
         this.addressLoading = false;
         this.showAlert(err.error?.message || 'Failed to save address', 'error');
+      }
+    });
+  }
+
+  deleteAddress(id: string) {
+    if (!confirm('Are you sure you want to delete this address?')) return;
+    this.service.deleteAddress(id).subscribe({
+      next: () => {
+        this.loadAddresses();
+        this.showAlert('Address deleted successfully', 'success');
+      },
+      error: (err) => {
+        this.showAlert(err.error?.message || 'Failed to delete address', 'error');
+      }
+    });
+  }
+
+  setAsDefault(id: string) {
+    const targetAddress = this.addresses.find(a => a.id === id);
+    if (!targetAddress) return;
+
+    const updatedData = { ...targetAddress, isDefault: true };
+
+    this.service.updateAddress(updatedData, id).subscribe({
+      next: () => {
+        this.loadAddresses();
+        this.showAlert('Address set as default', 'success');
+      },
+      error: (err) => {
+        this.showAlert(err.error?.message || 'Failed to set default address', 'error');
       }
     });
   }
