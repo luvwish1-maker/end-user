@@ -63,6 +63,19 @@
         </div>
     </div>
 
+    <!-- Coupon Section -->
+    <div class="coupon-section mt-4">
+        <h4>Apply Coupon</h4>
+        <div class="d-flex gap-2">
+            <input type="text" class="form-control" placeholder="Enter coupon code" [(ngModel)]="couponCode">
+            <button (click)="applyCoupon()" [disabled]="!couponCode" class="btn btn-primary">Apply</button>
+        </div>
+        <div *ngIf="couponError" class="text-danger mt-1">{{ couponError }}</div>
+        <div *ngIf="couponDiscount > 0" class="text-success mt-1">
+            Coupon applied! You saved ₹{{ couponDiscount | number:'1.2-2' }}
+        </div>
+    </div>
+
     <!-- Price Summary -->
     <div class="price-summary mt-4">
         <h4>Price Summary</h4>

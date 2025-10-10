@@ -119,7 +119,6 @@
     box-shadow: 0 0 5px rgba(235, 20, 125, 0.3);
 }
 
-/* Address Section */
 .address-section {
     margin-top: 40px;
 }
@@ -171,6 +170,23 @@
 
 .address-button button:hover,
 .checkout-btn button:hover {
+    background-color: #d10f7c;
+}
+
+.coupon-section input {
+    border-radius: 6px;
+    padding: 8px 10px;
+}
+
+.coupon-section button {
+    background-color: #EB147D;
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.coupon-section button:hover {
     background-color: #d10f7c;
 }
 

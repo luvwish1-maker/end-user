@@ -16,6 +16,9 @@ export class OrderListSummaryComponent implements OnInit {
   orderList: any[] = [];
   addresses: any[] = [];
   selectedAddress: any = null;
+  couponCode: string = '';
+  couponDiscount: number = 0;
+  couponError: string = '';
 
   constructor(
     private service: ProductsService,
@@ -98,7 +101,20 @@ export class OrderListSummaryComponent implements OnInit {
     return this.orderList.reduce((sum, item) => sum + ((item.actualPrice - item.discountedPrice) * (item.quantity || 1)), 0);
   }
 
+  applyCoupon() {
+    this.couponError = '';
+
+    if (this.couponCode.toUpperCase() === 'SAVE50') {
+      const totalAmount = this.getFinalAmount();
+      this.couponDiscount = totalAmount * 0.1;
+    } else {
+      this.couponError = 'Invalid coupon code';
+      this.couponDiscount = 0;
+    }
+  }
+
   getFinalAmount(): number {
-    return this.orderList.reduce((sum, item) => sum + (item.discountedPrice * (item.quantity || 1)), 0);
+    const total = this.orderList.reduce((sum, item) => sum + (item.discountedPrice * (item.quantity || 1)), 0);
+    return total - this.couponDiscount;
   }
 }
