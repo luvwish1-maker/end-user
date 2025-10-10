@@ -13,11 +13,9 @@ import { ProfileService } from '../profile/service/profile.service';
   styleUrl: './order-list-summary.component.css'
 })
 export class OrderListSummaryComponent implements OnInit {
-  orderList: any = []
-
-  address = {
-    address: "216 St Paul's Rd, London N1 2LL, UK UD 44-784232"
-  }
+  orderList: any[] = [];
+  addresses: any[] = [];
+  selectedAddress: any = null;
 
   constructor(
     private service: ProductsService,
@@ -25,31 +23,28 @@ export class OrderListSummaryComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loadOrders()
-    this.loadAddresses()
+    this.loadOrders();
+    this.loadAddresses();
   }
 
   loadOrders() {
     this.service.getCart().subscribe({
       next: (res: any) => {
-
         this.orderList = (res.data || []).map((item: any) => {
           const prod = item.product || null;
-
           if (!prod) {
             return {
               ...item,
               name: 'Product Unavailable',
               discountedPrice: 0,
               actualPrice: 0,
-              stockCount: 0,
               img: '/assets/images/no-image.png',
               quantity: item.quantity || 1,
               unavailable: true
             };
           }
 
-          const mainImage = (prod.images && prod.images.length > 0)
+          const mainImage = (prod.images && prod.images.length)
             ? prod.images.find((img: any) => img.isMain) || prod.images[0]
             : null;
 
@@ -61,27 +56,49 @@ export class OrderListSummaryComponent implements OnInit {
             unavailable: false
           };
         });
+
+        // Auto-select default address if available
+        if (!this.selectedAddress && this.addresses.length) {
+          this.selectedAddress = this.addresses.find(a => a.isDefault) || this.addresses[0];
+        }
       },
-      error: (err) => {
-        console.error(err);
-      }
+      error: (err) => console.error(err)
     });
   }
 
   loadAddresses() {
     this.profileService.getAddresses().subscribe({
       next: (res: any) => {
-        console.log(res);
+        this.addresses = res.data || [];
+        this.selectedAddress = this.addresses.find(a => a.isDefault) || this.addresses[0];
       },
-      error: (err) => {
-        console.error(err);
-      }
-    })
+      error: (err) => console.error(err)
+    });
   }
 
   getStars(rating: number, index: number): string {
     if (index < Math.floor(rating)) return 'bi-star-fill';
     if (index < rating) return 'bi-star-half';
     return 'bi-star';
+  }
+
+  getDiscount(actual: number, discounted: number): number {
+    return Math.round(((actual - discounted) / actual) * 100);
+  }
+
+  getTotalItems(): number {
+    return this.orderList.reduce((sum, item) => sum + (item.quantity || 0), 0);
+  }
+
+  getTotalPrice(): number {
+    return this.orderList.reduce((sum, item) => sum + (item.actualPrice * (item.quantity || 1)), 0);
+  }
+
+  getTotalDiscount(): number {
+    return this.orderList.reduce((sum, item) => sum + ((item.actualPrice - item.discountedPrice) * (item.quantity || 1)), 0);
+  }
+
+  getFinalAmount(): number {
+    return this.orderList.reduce((sum, item) => sum + (item.discountedPrice * (item.quantity || 1)), 0);
   }
 }

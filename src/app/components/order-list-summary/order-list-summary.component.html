@@ -21,12 +21,16 @@
                         </ng-container>
                     </div>
 
-                    <!-- Price, original price, discount -->
+                    <!-- Price -->
                     <div class="price-row">
                         <div class="price-col">
                             <span class="price">₹{{ order.discountedPrice }}</span>
-                            <span class="original-price">₹{{ order.actualPrice }}</span>
-                            <span class="discount">{{ order.discount }}</span>
+                            <span class="original-price" *ngIf="order.actualPrice > order.discountedPrice">
+                                ₹{{ order.actualPrice }}
+                            </span>
+                            <span class="discount" *ngIf="order.actualPrice > order.discountedPrice">
+                                {{ getDiscount(order.actualPrice, order.discountedPrice) }}% OFF
+                            </span>
                         </div>
                     </div>
 
@@ -40,25 +44,51 @@
         </div>
     </div>
 
-    <!-- Address -->
-    <div class="address-section">
-        <h4>Address</h4>
-        <h5><i class="bi bi-geo-alt"></i> Delivery Address</h5>
-
-        <div class="address-row">
-            <div class="address-card">
-                <p>{{ address.address }}</p>
-            </div>
-            <div class="address-button">
-                <button>Change</button>
+    <!-- Address Selection -->
+    <div class="address-section" *ngIf="addresses.length">
+        <h4>Delivery Address</h4>
+        <div class="address-row" *ngFor="let addr of addresses">
+            <div class="form-check address-card">
+                <input class="form-check-input" type="radio" name="selectedAddress" [value]="addr"
+                    [(ngModel)]="selectedAddress" [checked]="addr.isDefault">
+                <label class="form-check-label">
+                    <strong>{{ addr.name }}</strong> - {{ addr.address }}, {{ addr.city }}, {{ addr.state }} - {{
+                    addr.postalCode }} <br>
+                    {{ addr.country }} <br>
+                    <strong>Phone:</strong> {{ addr.phone }} <span *ngIf="addr.landmark"> | Landmark: {{ addr.landmark
+                        }}</span>
+                    <span *ngIf="addr.isDefault" class="badge bg-success ms-2">Default</span>
+                </label>
             </div>
         </div>
     </div>
 
-    <!-- Checkout Button -->
-    <div class="checkout-btn">
-        <button>Check Out</button>
+    <!-- Price Summary -->
+    <div class="price-summary mt-4">
+        <h4>Price Summary</h4>
+        <div class="summary-row" *ngIf="orderList.length">
+            <div>Total Items:</div>
+            <div>{{ getTotalItems() }}</div>
+        </div>
+        <div class="summary-row">
+            <div>Total Price:</div>
+            <div>₹{{ getTotalPrice() | number:'1.2-2' }}</div>
+        </div>
+        <div class="summary-row">
+            <div>Total Discount:</div>
+            <div>₹{{ getTotalDiscount() | number:'1.2-2' }}</div>
+        </div>
+        <div class="summary-row fw-bold">
+            <div>Final Amount:</div>
+            <div>₹{{ getFinalAmount() | number:'1.2-2' }}</div>
+        </div>
     </div>
+
+    <!-- Checkout Button -->
+    <div class="checkout-btn mt-4 text-center">
+        <button [disabled]="!selectedAddress">Check Out</button>
+    </div>
+
 </div>
 
 <app-footer></app-footer>

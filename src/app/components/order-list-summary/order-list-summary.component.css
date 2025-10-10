@@ -9,10 +9,9 @@
 
 /* Headings */
 .orders .heading h4,
-.address-section h4,
-.address-section h5 {
+.address-section h4 {
     margin-bottom: 20px;
-    font-weight: 600;
+    font-weight: 700;
     color: #222;
 }
 
@@ -33,6 +32,11 @@
     background: #fff;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.order-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
 .order-card img {
@@ -102,7 +106,7 @@
 
 .quantity input {
     width: 60px;
-    padding: 5px 8px;
+    padding: 6px 10px;
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 14px;
@@ -135,43 +139,66 @@
     padding: 20px;
     background: #fff;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.address-button button {
-    background-color: #EB147D;
-    border: none;
-    color: #fff;
-    padding: 12px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.3s;
+.address-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
 }
 
-.address-button button:hover {
-    background-color: #d10f7c;
+.address-card strong {
+    color: #EB147D;
 }
 
-/* Checkout Button */
-.checkout-btn {
-    text-align: center;
-    margin: 50px 0;
+/* Default badge */
+.address-card .badge.bg-success {
+    background-color: #EB147D !important;
 }
 
+/* Buttons */
+.address-button button,
 .checkout-btn button {
     background-color: #EB147D;
     border: none;
     color: #fff;
-    padding: 14px 35px;
+    padding: 12px 25px;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 18px;
     font-weight: 600;
     transition: all 0.3s;
 }
 
+.address-button button:hover,
 .checkout-btn button:hover {
     background-color: #d10f7c;
+}
+
+/* Price Summary */
+.price-summary {
+    margin-top: 40px;
+    background: #fff;
+    padding: 20px 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.summary-row.fw-bold {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+/* Checkout Button */
+.checkout-btn {
+    margin-top: 30px;
+    text-align: center;
 }
 
 /* Responsive */
@@ -190,7 +217,8 @@
         flex-direction: column;
     }
 
-    .address-button button {
+    .address-button button,
+    .checkout-btn button {
         width: 100%;
     }
 }
