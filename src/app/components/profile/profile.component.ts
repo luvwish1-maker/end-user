@@ -19,6 +19,7 @@ export class ProfileComponent implements OnInit {
   passwordForm!: FormGroup;
   bankForm!: FormGroup;
   addressForm!: FormGroup;
+  addresses: any[] = []
   customerProfileId!: any;
 
   loading = false;
@@ -41,6 +42,7 @@ export class ProfileComponent implements OnInit {
     this.initForms();
     this.loadProfile();
     this.loadBankDetails();
+    this.loadAddresses()
   }
 
   private initForms() {
@@ -190,6 +192,13 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  loadAddresses() {
+    this.service.getAddresses().subscribe({
+      next: (res: any) => (this.addresses = res.data),
+      error: (err) => console.error(err)
+    });
+  }
+
   openAddressModal(content: TemplateRef<any>) {
     this.addressForm.reset();
     this.modalService.open(content, { size: 'lg', centered: true });
@@ -198,7 +207,12 @@ export class ProfileComponent implements OnInit {
   saveAddress(modalRef: any) {
     if (this.addressForm.invalid) return;
     this.addressLoading = true;
-    this.service.addAddress(this.addressForm.value).subscribe({
+    const payload = {
+      ...this.addressForm.value,
+      customerProfileId: String(this.customerProfileId),
+      isDefault: this.addressForm.value.isDefault ?? false
+    };
+    this.service.addAddress(payload).subscribe({
       next: () => {
         this.addressLoading = false;
         modalRef.close();
