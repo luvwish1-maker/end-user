@@ -5,3 +5,138 @@
 button {
     min-width: 100px;
 }
+
+.container {
+    max-width: 900px;
+}
+
+h3,
+h5 {
+    color: #EB147D;
+    font-weight: 600;
+}
+
+.card {
+    border: 1px solid #eee;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(235, 20, 125, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(235, 20, 125, 0.15);
+}
+
+.card img {
+    object-fit: cover;
+    border: 3px solid #EB147D;
+}
+
+button {
+    min-width: 100px;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-primary {
+    color: #EB147D;
+    border-color: #EB147D;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+    background-color: #EB147D;
+    color: #fff;
+}
+
+.btn-primary {
+    background-color: #EB147D;
+    border-color: #EB147D;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: #d3136f;
+    border-color: #d3136f;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: #000;
+}
+
+.btn-outline-success {
+    color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-outline-success:hover {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.btn-outline-danger {
+    color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.alert-info {
+    border: 1px solid #EB147D;
+    background-color: rgba(235, 20, 125, 0.05);
+    color: #333;
+    border-radius: 8px;
+}
+
+.modal-header {
+    background-color: #EB147D;
+    color: #fff;
+    border-bottom: none;
+}
+
+.modal-title {
+    font-weight: 600;
+    color: #fff;
+}
+
+.btn-close {
+    filter: brightness(0) invert(1);
+}
+
+.form-label {
+    font-weight: 500;
+    color: #444;
+}
+
+.form-control:focus {
+    border-color: #EB147D;
+    box-shadow: 0 0 0 0.2rem rgba(235, 20, 125, 0.25);
+}
+
+.spinner-border.text-primary {
+    color: #EB147D !important;
+}
+
+.badge.bg-success {
+    background-color: #28a745 !important;
+}
+
+.border {
+    border-color: rgba(235, 20, 125, 0.1) !important;
+}
